@@ -77,10 +77,11 @@ Assicurazione & Colei che riceve da cittadini nuove richieste e crea sinistri & 
 Studio & Colei che riceve da cittadini nuove richieste e crea sinistri & Ente esterno\\ \hline
 Supervisore & Colui che, all’interno dello studio, ha il compito di generare incarichi e assegnarli ad uno dei propri periti & Coordinatore\\ \hline
 Perito & Colui che si occupa della attività peritali & Incaricato dal supervisore, membro dello studio/ufficio\\ \hline
-Assicurato & Colui che farà parte alla videoperizia e che si occupa della ripresa del sinistro & Cliente, parte coinvolta\\ \hline
+Assicurato & Colui che farà parte alla video-perizia e che si occupa della ripresa del sinistro & Cliente, parte coinvolta\\ \hline
 Sinistro & Danno e relativo tipo di danno da periziare & \\ \hline
 Incarico & Insieme di attività peritali atte all’intero svolgimento della perizia & Fascicolo\\ \hline
-Video-perizia & Perizia eseguita telematicamente tramite smartphone o dispositivo mobile & Perizia telematica\\ 
+Video-perizia & Perizia eseguita telematicamente tramite smartphone o dispositivo mobile & Perizia telematica, videochiamata
+\\ 
 
 \end{tabularx}
 
@@ -143,30 +144,48 @@ Ogni \texttt{VIDEO-PERIZIA} ed ogni \texttt{MEDIA} deve essere localizzato per e
 
 \chapter{Progettazione Concettuale}
 
-In questo capitolo si spiegano le strategie messe in campo per soddisfare i requisiti identificati nell'analisi.
-
-
 \section{Schema scheletro}
 
-Questa sezione spiega come le componenti principali del software interagiscono fra loro.
-%
-In particolare, qui va spiegato \textbf{se} e \textbf{come} è stato utilizzato il pattern
-architetturale model-view-controller (e/o alcune sue declinazioni specifiche, come entity-control-boundary).
-In questa sezione vanno descritte, per ciascun componente architetturale che ruoli ricopre (due o tre ruoli al massimo), ed in che modo interagisce (ossia, scambia informazioni) con gli altri componenti dell'architettura.
-%
-Raccomandiamo di porre particolare attenzione al design dell'interazione fra view e controller: se ben progettato, sostituire in blocco la view non dovrebbe causare alcuna modifica nel controller (tantomeno nel model).
+\textsc{Seguiranno ora dei sotto-schemi E/R iniziali, che verranno raffinati nella sezione successiva}
 
-Con questa architettura, possono essere aggiunti un numero arbitrario di input ed output
-all'intelligenza artificiale.
-%
-Ovviamente, mentre l'aggiunta di output è semplice e non richiede alcuna modifica all'IA, la
-presenza di nuovi tipi di evento richiede invece in potenza aggiunte o rifiniture a GLaDOS.
-%
-Questo è dovuto al fatto che nuovi Input rappresentano di fatto nuovi elementi della business
-logic, la cui alterazione od espansione inevitabilmente impatta il controller del progetto.
 
-In \Cref{img:goodarch} è esemplificato il diagramma UML architetturale.
+\clearpage
+Dal dominio identificato in seguito all’intervista si può notare che sono presenti tre entità rappresentanti delle persone: \textbf{Perito}, \textbf{Supervisore} e \textbf{Assicurato}.
+\\
+Queste entità quindi sono generalizzate da \textbf{Persona}, che raccoglie gli attributi in comune.
+\\
+In seguito si ha una collaborazione tra \textbf{Studi Peritali} e \textbf{Assicurazioni}, uno studio può non avere ancora collaborazioni con le assicurazioni (perché magari creato da poco) e può averne molteplici, invece un’ssicurazione deve collaborare con almeno uno studio perché altrimenti non potrebbe lavorare e non avrebbe senso di esistere in questa modellazione.
+\\
+Le assicurazioni sono identificate dalle proprie denominazioni, mentre gli studi da un ID. 
+%poiché è difficile distinguerle per sedi o per partite IVA (una singola P. IVA ) potrebbe avere più studi.
+\\
+Uno studio peritale può assumere sia supervisori (almeno uno altrimenti nessuno smisterebbe gli incarichi) sia periti, abbiamo quindi un associazione ternaria che andremo a rifinire in seguito.
+\\
+\begin{figure}[ht]
+    \begin{center}
+        \centering
+        \includegraphics[width=\textwidth]{img/StudioPeritale.png}
+    \end{center}
+\end{figure}
+\clearpage
 
+Un \textbf{Perito}, in un determinato momento, può svolgere zero incarichi, ma anche molteplici, invece un \textbf{Incarico} può essere svolto solo da un perito.
+\\
+L’incarico deve per forza avere almeno una \textbf{Video Perizia} annessa (per la corretta esecuzione delle pratiche peritali), inoltre è identificato dalla combinazione di codice e perito.
+\\
+La video perizia può essere eseguita solo in presenza di un incarico, e quindi è identificata da un numero incrementale combinato al codice dell’incarico corrispondente.
+\\
+Durante la videochiamata possono essere scattate \textbf{Foto} e registrati \textbf{Video}, ma non è sempre necessario.
+\\
+Questi ultimi sono entità figlie di \textbf{Media}, hanno una dimensione e sono identificati dal nome e dall’estensione del file.
+\\
+\begin{figure}[ht]
+    \begin{center}
+        \centering
+        \includegraphics[width=\textwidth]{img/VideoPerizia.png}
+    \end{center}
+\end{figure}
+\clearpage
 
 \section{Raffinamenti proposti}
 
@@ -240,13 +259,13 @@ In \Cref{img:badarch} è mostrato il modo \textbf{sbagliato} di fare le cose.
 %
 Questo schema è fatto male perché:
 \begin{itemize}
-	\item È caotico.
-	\item È difficile da leggere e capire.
-	\item Vi sono troppe classi, e non si capisce bene quali siano i rapporti che intercorrono fra loro.
-	\item Si mostrano elementi implementativi irrilevanti, come i campi e i metodi privati nella classe \texttt{AbstractEnvironment}.
-	\item Se l'intenzione era quella di costruire un diagramma architetturale, allora lo schema è ancora più sbagliato, perché mostra pezzi di implementazione.
-	\item Una delle classi, in alto al centro, galleggia nello schema, non connessa a nessuna altra classe, e di fatto costituisce da sola un secondo schema UML scorrelato al resto
-	\item Le interfacce presentano tutti i metodi e non una selezione che aiuti il lettore a capire quale parte del sistema si vuol mostrare.
+    \item È caotico.
+    \item È difficile da leggere e capire.
+    \item Vi sono troppe classi, e non si capisce bene quali siano i rapporti che intercorrono fra loro.
+    \item Si mostrano elementi implementativi irrilevanti, come i campi e i metodi privati nella classe \texttt{AbstractEnvironment}.
+    \item Se l'intenzione era quella di costruire un diagramma architetturale, allora lo schema è ancora più sbagliato, perché mostra pezzi di implementazione.
+    \item Una delle classi, in alto al centro, galleggia nello schema, non connessa a nessuna altra classe, e di fatto costituisce da sola un secondo schema UML scorrelato al resto
+    \item Le interfacce presentano tutti i metodi e non una selezione che aiuti il lettore a capire quale parte del sistema si vuol mostrare.
 \end{itemize}
 
 
