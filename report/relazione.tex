@@ -12,6 +12,10 @@
 
 \usepackage[italian]{cleveref}
 
+% Centra verticalmente i contenuti delle righe
+\renewcommand\tabularxcolumn[1]{m{#1}}
+
+
 \title{\textbf{Elaborato per il corso Basi di dati}
 Progettazione di una base di dati per la gestione di video perizie}
 
@@ -84,7 +88,7 @@ Video-perizia & Perizia eseguita telematicamente tramite smartphone o dispositiv
 \\ 
 
 \end{tabularx}
-
+\noindent
 \def\arraystretch{2}% 
 \begin{tabularx}{\textwidth}{ m{3cm} | m{6cm} | m{3cm}}
 Documenti & Documenti richiesti al fine di eseguire una perizia completa & \\ \hline
@@ -125,20 +129,21 @@ Ogni \texttt{VIDEO-PERIZIA} ed ogni \texttt{MEDIA} deve essere localizzato per e
 \\
 \textbf{Segue un elenco delle principali azioni richieste:}
 \begin{enumerate}
-    \item \textsc{Registrare/eliminare una nuova assicurazione aderente}
+    \item \textsc{Registrare/eliminare assicurazioni}
+    \item \textsc{Registrare/eliminare un assicurato}
+    \item \textsc{Erogazione di una nuova polizza da parte di un assicurazione}
     \item \textsc{Registrare/eliminare studi peritali}
-    \item \textsc{Registrare/eliminare periti per uno studio}
-    \item \textsc{se la soluzione è stata realizzata utilizzando uno}
-    \item \textsc{Registrare/cambiare supervisori per uno studio}
-    \item \textsc{Registrare/eliminare un assicurato tramite la sua anagrafica}
-    \item \textsc{Assegnare il perito all'incarico}
-    \item \textsc{Gestire lo stato degli incarichi}
-    \item \textsc{Leggere tutti gli incarichi aperti per una data assicurazione o studio}
-    \item \textsc{Registrare/eliminare documenti per un incarico}
+    \item \textsc{Assumere/licenziare un nuovo perito o dirigente in uno studio}
+    \item \textsc{QUALCOSA SU TEAM????}
+    \item \textsc{Stipulare un nuovo contratto tra assicurato e assicurazione}
+    \item \textsc{Creare nuovo lavoro e assegnarlo a un perito}
+    \item \textsc{Creare l’incarico da svolgere in base al lavoro di un perito}
+    \item \textsc{Aggiornare lo stato di un incarico}
+    \item \textsc{Leggere tutti gli incarichi aperti in un determinato studio}
+    \item \textsc{Aggiungere dei documenti ad un incarico}
     \item \textsc{Inserire una video-perizia per un incarico}
-    \item \textsc{Inserire in database tutti i media raccolti in fase di video-perizia}
-    \item \textsc{Tenere traccia di ogni sinistro avvenuto in una fascia temporale}
-    \item \textsc{Avere una lista di ogni video-perizia svolta per ogni assicurazione o studio}
+    \item \textsc{Allegare i media raccolti alla video-perizia}
+    \item \textsc{Raccogliere tutte le informazioni relative a un incarico (incluse video-perizie e documenti)}
 \end{enumerate}
 
 
@@ -220,20 +225,6 @@ L'uso inappropriato è invece valutato negativamente: a tal proposito, si raccom
 \Cref{img:strategy}: le implementazioni di \texttt{Personality} possono essere modificate, e la
 modifica impatta direttamente sul comportamento di GLaDOS.
 
-
-\paragraph{Problema} In fase di sviluppo, sono state sviluppate due personalità, una buona ed una cattiva.
-Quella buona restituisce sempre una torta vera, mentre quella cattiva restituisce sempre la
-promessa di una torta che verrà in realtà disattesa.
-Ci si è accorti che diverse personalità condividevano molto del comportamento,
-portando a classi molto simili e a duplicazione.
-
-\paragraph{Soluzione} Dato che le due personalità differiscono solo per il comportamento da effettuarsi in caso di percorso completato con successo,
-è stato utilizzato il \textit{pattern template method} per massimizzare il riuso, come da \Cref{img:template}.
-Il metodo template è \texttt{onSuccess()}, che chiama un metodo astratto e protetto
-\texttt{makeCake()}.
-
-\subsubsection{Gestione di output multipli}
-
 \begin{figure}[H]
 \centering{}
 \includegraphics[width=.7\textwidth]{img/observer}
@@ -241,32 +232,6 @@ Il metodo template è \texttt{onSuccess()}, che chiama un metodo astratto e prot
 \label{img:observer}
 \end{figure}
 
-\paragraph{Problema} Il sistema deve supportare output multipli. In particolare, si richiede che vi sia un logger che stampa a terminale o su file,
-e un'interfaccia grafica che mostri una rappresentazione grafica del sistema.
-
-\paragraph{Soluzione} Dato che i due sistemi di reporting utilizzano le medesime informazioni, si è deciso di raggrupparli dietro l'interfaccia \texttt{Output}.
-A questo punto, le due possibilità erano quelle di far sì che \texttt{GLaDOS} potesse pilotarle entrambe.
-Invece di fare un sistema in cui questi output sono obbligatori e connessi, si è deciso di usare maggior flessibilità (anche in vista di future estensioni)
-e di adottare una comunicazione uno-a-molti fra \texttt{GLaDOS} ed i sistemi di output.
-La scelta è quindi ricaduta sul \textit{pattern Observer}: \texttt{GLaDOS} è observable, e le istanze di \texttt{Output} sono observer.
-%
-Il suo utilizzo è esemplificato in \Cref{img:observer}
-
-
-\subsection*{Contro-esempio: pessimo diagramma UML}
-
-In \Cref{img:badarch} è mostrato il modo \textbf{sbagliato} di fare le cose.
-%
-Questo schema è fatto male perché:
-\begin{itemize}
-    \item È caotico.
-    \item È difficile da leggere e capire.
-    \item Vi sono troppe classi, e non si capisce bene quali siano i rapporti che intercorrono fra loro.
-    \item Si mostrano elementi implementativi irrilevanti, come i campi e i metodi privati nella classe \texttt{AbstractEnvironment}.
-    \item Se l'intenzione era quella di costruire un diagramma architetturale, allora lo schema è ancora più sbagliato, perché mostra pezzi di implementazione.
-    \item Una delle classi, in alto al centro, galleggia nello schema, non connessa a nessuna altra classe, e di fatto costituisce da sola un secondo schema UML scorrelato al resto
-    \item Le interfacce presentano tutti i metodi e non una selezione che aiuti il lettore a capire quale parte del sistema si vuol mostrare.
-\end{itemize}
 
 
 \begin{figure}[h]
@@ -280,29 +245,92 @@ Questo schema è fatto male perché:
 \chapter{Progettazione Logica}
 \section{Stima del volume dei dati}
 
-Il testing automatizzato è un requisito di qualunque progetto software che si rispetti, e consente di verificare che non vi siano regressioni nelle funzionalità a fronte di aggiornamenti.
-%
-Per quanto riguarda questo progetto è considerato sufficiente un test minimale, a patto che sia completamente automatico.
-%
-Test che richiedono l'intervento da parte dell'utente sono considerati \textit{negativamente} nel computo del punteggio finale.
+\mbox{}\\
+\def\arraystretch{2}% 
+\begin{tabularx}{\textwidth}{ p{6cm} | >{\centering\arraybackslash}p{2cm} | >{\centering\arraybackslash}X }
+    \textbf{Concetto} & \textbf{Costrutto} & \textbf{Volume} \\
+\hline
+ASSICURAZIONE & E & 50\\ \hline
+POLIZZA & E & 3.000.000\\ \hline
+ASSICURATO & E & 1.000.000\\ \hline
+EROGAZIONE & A & 1.000\\ \hline
+STIPULAZIONE & A & 2.000.000\\ \hline
+GENERAZIONE & A & 100.000\\ \hline
+SINISTRO & E & 100.000\\ \hline
+DELEGAZIONE & A & 100.000 \\ \hline
+STUDIO\_PERITALE & E & 5.000\\ \hline
+SPECIFICAZIONE & A & 100.000\\ \hline
+CATEGORIA\_SINISTRO & E & 20\\
+\end{tabularx}
 
+\noindent
+\def\arraystretch{2}% 
+\begin{tabularx}{\textwidth}{ p{6cm} | >{\centering\arraybackslash}p{2cm} | >{\centering\arraybackslash}X }
+DIRIGENTE & E & 10.000\\ \hline
+PERITO & E & 150.000\\ \hline
+ASSEGNAZIONE & E & 80.000\\ \hline
+RICEZIONE & A & 80.000\\ \hline
+LAVORO & A & 80.000\\ \hline
+TEAM & BOOO & BOOOH\\
+\end{tabularx}
+\\
+\\
+\\
+\\
+\\
+\noindent
+\def\arraystretch{2}% 
+\begin{tabularx}{\textwidth}{ p{6cm} | >{\centering\arraybackslash}p{2cm} | >{\centering\arraybackslash}X }
+SVOLGIMENTO & A & 100.000\\ \hline
+INCARICO & E & 100.000\\ \hline
+FASCICOLO & A & 100.000\\ \hline
+DOCUMENTI & E & 500.000\\ \hline
+ANNESSIONE & A & 500.000\\ \hline
+VIDEO\_PERIZIA & E & 120.000\\ \hline
+ALLEGATO & A & 50.000\\ \hline
+MEDIA & E & 70.000\\
+\end{tabularx}
 
+\clearpage
 \section{Descrizione delle operazioni principali e stima della loro frequenza}
 
-Ci aspettiamo, leggendo questa sezione, di trovare conferma alla divisione operata nella sezione del design di dettaglio, e di capire come è stato svolto il lavoro di integrazione.
-%
-\textbf{Andrà realizzata una sotto-sezione separata per ciascuno studente} che identifichi le porzioni di progetto sviluppate, separando quelle svolte in autonomia da quelle sviluppate in collaborazione.
-%
-Diversamente dalla sezione di design, in questa è consentito elencare package/classi, se lo studente ritiene sia il modo più efficace di convogliare l'informazione.
-%
-Si ricorda che l'impegno deve giustificare circa 40-50 ore di sviluppo (è normale e fisiologico che approssimativamente la metà del tempo sia impiegata in analisi e progettazione).
+\def\arraystretch{2}% 
+\begin{tabularx}{\textwidth}{ >{\centering\arraybackslash}p{2cm} | X |  >{\centering\arraybackslash}p{3cm} }
+    \textbf{Codice} & \textbf{Operazione} & \textbf{Frequenza}\\
+\hline
+1 & Registrare/eliminare assicurazioni & 1 al mese\\ \hline
+2 & Registrare/eliminare un assicurato & 500 al giorno\\ \hline
+3 & Erogazione di una nuova polizza da parte di un assicurazione & 75 all'anno\\ \hline
+4 & Registrare/eliminare studi peritali & 50 al mese\\ \hline
+5 & Assumere/licenziare un nuovo perito o dirigente in uno studio & 50.000 al mese\\ \hline
+6 & QUALCOSA SU TEAM???? & E\\ \hline
+7 & Stipulare un nuovo contratto tra assicurato e assicurazione & 1.000 al giorno\\ \hline
+8 & Creare nuovo lavoro e assegnarlo a un perito & 25.000 al giorno\\ \hline
+9 & Creare l’incarico da svolgere in base al lavoro di un perito & 25.000 al giorno\\ \hline
+10 & Aggiornare lo stato di un incarico & 50.000 al giorno\\
+\end{tabularx}
 
+\noindent
+\def\arraystretch{2}% 
+\begin{tabularx}{\textwidth}{ >{\centering\arraybackslash}p{2cm} | X |  >{\centering\arraybackslash}p{3cm} }
+11 & Leggere tutti gli incarichi aperti in un determinato studio & 2.000 al giorno\\ \hline
+12 & Aggiungere dei documenti ad un incarico & 35.000 al giorno\\ \hline
+13 & Inserire una video-perizia per un incarico & 30.000 al giorno\\ \hline
+14 & Allegare i media raccolti alla video-perizia & 20.000 al giorno\\ \hline
+15 & Raccogliere tutte le informazioni relative a un incarico (incluse video-perizie e documenti) & 8.000 al giorno\\
+\end{tabularx}
+\\
+\\
+\\
 \section{Schemi di navigazione e tabelle degli accessi}
 
-Questa sezione, come quella riguardante il design dettagliato va svolta \textbf{singolarmente da ogni membro del gruppo}.
-
-%
-In questa sezione, \textit{dopo l'elenco}, è anche bene evidenziare eventuali pezzi di codice ``riadattati'' (o scopiazzati...) da Internet o da altri progetti, pratica che tolleriamo ma che non raccomandiamo.
+\def\arraystretch{2}% 
+\begin{tabularx}{\textwidth}{ >{\centering\arraybackslash}p{3cm} | >{\centering\arraybackslash}p{2cm} | >{\centering\arraybackslash}X |  >{\centering\arraybackslash}p{2cm} }
+    \textbf{Concetto} & \textbf{Costrutto} & \textbf{Accessi} & \textbf{Tipo} \\
+\hline
+1 & E & 1 & L \\ \hline
+2 & E & 500 al giorno  & L \\ \hline
+\end{tabularx}
 
 \section{Raffinamento dello schema}
 
