@@ -6,6 +6,8 @@
 \usepackage[utf8]{inputenc}
 \usepackage{float}
 \usepackage{hyperref}
+\usepackage{caption}
+
 
 % Questo commentalo se vuoi scrivere in inglese.
 \usepackage[italian]{babel}
@@ -250,15 +252,15 @@ modifica impatta direttamente sul comportamento di GLaDOS.
 \begin{tabularx}{\textwidth}{ p{6cm} | >{\centering\arraybackslash}p{2cm} | >{\centering\arraybackslash}X }
     \textbf{Concetto} & \textbf{Costrutto} & \textbf{Volume} \\
 \hline
-ASSICURAZIONE & E & 50\\ \hline
-POLIZZA & E & 3.000.000\\ \hline
+ASSICURAZIONE & E & 30\\ \hline
+POLIZZA & E & 2.000.000\\ \hline
 ASSICURATO & E & 1.000.000\\ \hline
-EROGAZIONE & A & 1.000\\ \hline
+EROGAZIONE & A & 300\\ \hline
 STIPULAZIONE & A & 2.000.000\\ \hline
 GENERAZIONE & A & 100.000\\ \hline
 SINISTRO & E & 100.000\\ \hline
 DELEGAZIONE & A & 100.000 \\ \hline
-STUDIO\_PERITALE & E & 5.000\\ \hline
+STUDIO\_PERITALE & E & 3.000\\ \hline
 SPECIFICAZIONE & A & 100.000\\ \hline
 CATEGORIA\_SINISTRO & E & 20\\
 \end{tabularx}
@@ -266,12 +268,13 @@ CATEGORIA\_SINISTRO & E & 20\\
 \noindent
 \def\arraystretch{2}% 
 \begin{tabularx}{\textwidth}{ p{6cm} | >{\centering\arraybackslash}p{2cm} | >{\centering\arraybackslash}X }
-DIRIGENTE & E & 10.000\\ \hline
-PERITO & E & 150.000\\ \hline
+DIRIGENTE & E & 4.000\\ \hline
+DIREZIONE & A & 4.000\\ \hline
+PERITO & E & 60.000\\ \hline
+ASSUNZIONE & A & 60.000\\ \hline
 ASSEGNAZIONE & E & 80.000\\ \hline
 RICEZIONE & A & 80.000\\ \hline
-LAVORO & A & 80.000\\ \hline
-TEAM & BOOO & BOOOH\\
+LAVORO & A & 80.000\\
 \end{tabularx}
 \\
 \\
@@ -284,8 +287,8 @@ TEAM & BOOO & BOOOH\\
 SVOLGIMENTO & A & 100.000\\ \hline
 INCARICO & E & 100.000\\ \hline
 FASCICOLO & A & 100.000\\ \hline
-DOCUMENTI & E & 500.000\\ \hline
-ANNESSIONE & A & 500.000\\ \hline
+DOCUMENTI & E & 300.000\\ \hline
+ANNESSIONE & A & 120.000\\ \hline
 VIDEO\_PERIZIA & E & 120.000\\ \hline
 ALLEGATO & A & 50.000\\ \hline
 MEDIA & E & 70.000\\
@@ -321,16 +324,51 @@ MEDIA & E & 70.000\\
 \end{tabularx}
 \\
 \\
-\\
 \section{Schemi di navigazione e tabelle degli accessi}
+
+\subsection{1 - Registrare/eliminare assicurazioni}
 
 \def\arraystretch{2}% 
 \begin{tabularx}{\textwidth}{ >{\centering\arraybackslash}p{3cm} | >{\centering\arraybackslash}p{2cm} | >{\centering\arraybackslash}X |  >{\centering\arraybackslash}p{2cm} }
     \textbf{Concetto} & \textbf{Costrutto} & \textbf{Accessi} & \textbf{Tipo} \\
 \hline
-1 & E & 1 & L \\ \hline
-2 & E & 500 al giorno  & L \\ \hline
+Assicurazione & E & 1 & S \\
 \end{tabularx}
+\begin{center}
+\textbf{Totale : 1S * 1 al giorno = 2 al giorno}
+\end{center}
+
+\subsection{2 - Registrare/eliminare un assicurato}
+
+\def\arraystretch{2}% 
+\begin{tabularx}{\textwidth}{ >{\centering\arraybackslash}p{3cm} | >{\centering\arraybackslash}p{2cm} | >{\centering\arraybackslash}X |  >{\centering\arraybackslash}p{2cm} }
+    \textbf{Concetto} & \textbf{Costrutto} & \textbf{Accessi} & \textbf{Tipo} \\
+\hline
+Assicurato & E & 1 & S \\
+Stipulazione & E & 1 & S \\
+Polizza & E & 1 & S \\
+Erogazione & E & 1 & S \\
+\end{tabularx}
+\begin{center}
+\textbf{Totale : 4S * 500 al giorno = 4.000 al giorno}
+\end{center}
+
+\subsection{3 - Erogazione di una nuova polizza da parte di un assicurazione}
+
+\def\arraystretch{2}% 
+\begin{tabularx}{\textwidth}{ >{\centering\arraybackslash}p{3cm} | >{\centering\arraybackslash}p{2cm} | >{\centering\arraybackslash}X |  >{\centering\arraybackslash}p{2cm} }
+    \textbf{Concetto} & \textbf{Costrutto} & \textbf{Accessi} & \textbf{Tipo} \\
+\hline
+Assicurato & E & 1 & S \\
+Stipulazione & E & 1 & S \\
+Polizza & E & 1 & S \\
+Erogazione & E & 1 & S \\
+\end{tabularx}
+\begin{center}
+\textbf{Totale : 4S * 500 al giorno = 4.000 al giorno}
+\end{center}
+
+%3 & Erogazione di una nuova polizza da parte di un assicurazione & 75 all'anno\\ \hline
 
 \section{Raffinamento dello schema}
 
