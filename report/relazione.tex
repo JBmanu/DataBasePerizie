@@ -40,9 +40,9 @@ Progettazione di una base di dati per la gestione di video perizie}
 
 Si vuole realizzare un database a supporto della gestione di video perizie (perizie a distanza tramite videochiamata) effettuate per varie assicurazioni italiane.
 \\
-La base di dati dovrà immagazzinare informazioni relative alle assicurazioni, ai sinistri, agli assicurati, agli studi peritali e ai relativi periti.
+La base di dati dovrà immagazzinare informazioni relativo a tutto l’ambito assicurativo, dalle assicurazioni, agli studi peritali che effettueranno le perizie.
 \\
-Tutte le assicurazioni devono avere la possibilità di controllare documenti e dati delle video-perizie effettuate.
+Si dovrà tenere conto anche di polizze, assicurati, dipendenti, documenti relativi alle video-perizie.
 
 
 \section{Intervista }
@@ -131,13 +131,14 @@ Ogni \texttt{VIDEO-PERIZIA} ed ogni \texttt{MEDIA} deve essere localizzato per e
 \\
 \textbf{Segue un elenco delle principali azioni richieste:}
 \begin{enumerate}
-    \item \textsc{Registrare/eliminare assicurazioni}
-    \item \textsc{Registrare/eliminare un assicurato}
-    \item \textsc{Erogazione di una nuova polizza da parte di un assicurazione}
-    \item \textsc{Registrare/eliminare studi peritali}
-    \item \textsc{Assumere/licenziare un nuovo perito o dirigente in uno studio}
-    \item \textsc{QUALCOSA SU TEAM????}
-    \item \textsc{Stipulare un nuovo contratto tra assicurato e assicurazione}
+    \item \textsc{Inserire un assicurato}
+    \item \textsc{Visualizzare tutte le polizze di un assicurato}
+    \item \textsc{Stipulazione di una nuova polizza tra assicurato e assicurazione}
+    \item \textsc{Registrare un nuovo studio peritale}
+    \item \textsc{Rimuovere uno studio peritale}
+    \item \textsc{Generare un sinistro e delegarlo a uno studio peritale}
+    \item \textsc{Assumere un nuovo perito o dirigente in uno studio}
+    \item \textsc{Licenziare un perito di uno studio}
     \item \textsc{Creare nuovo lavoro e assegnarlo a un perito}
     \item \textsc{Creare l’incarico da svolgere in base al lavoro di un perito}
     \item \textsc{Aggiornare lo stato di un incarico}
@@ -161,7 +162,7 @@ Dal dominio identificato in seguito all’intervista si può notare che sono pre
 \\
 Queste entità quindi sono generalizzate da \textbf{Persona}, che raccoglie gli attributi in comune.
 \\
-In seguito si ha una collaborazione tra \textbf{Studi Peritali} e \textbf{Assicurazioni}, uno studio può non avere ancora collaborazioni con le assicurazioni (perché magari creato da poco) e può averne molteplici, invece un’ssicurazione deve collaborare con almeno uno studio perché altrimenti non potrebbe lavorare e non avrebbe senso di esistere in questa modellazione.
+In seguito si ha una collaborazione tra \textbf{Studi Peritali} e \textbf{Assicurazioni}, uno studio può non avere ancora collaborazioni con le assicurazioni (perché magari creato da poco) e può averne molteplici, invece un’assicurazione deve collaborare con almeno uno studio perché altrimenti non potrebbe lavorare e non avrebbe senso di esistere in questa modellazione.
 \\
 Le assicurazioni sono identificate dalle proprie denominazioni, mentre gli studi da un ID. 
 %poiché è difficile distinguerle per sedi o per partite IVA (una singola P. IVA ) potrebbe avere più studi.
@@ -196,36 +197,7 @@ Questi ultimi sono entità figlie di \textbf{Media}, hanno una dimensione e sono
 
 \section{Raffinamenti proposti}
 
-È assolutamente inutile, ed è anzi controproducente, descrivere classe-per-classe (o peggio ancora metodo-per-metodo) com'è fatto il vostro software: è un livello di dettaglio proprio della documentazione dell'API (deducibile dalla Javadoc).
-
-\textbf{È necessario che ciascun membro del gruppo abbia una propria sezione di design dettagliato,
-di cui sarà il solo responsabile}.
-Per continuare il parallelo con la vettura di Formula 1, se nei fogli di progetto che mostrano il
-design delle sospensioni anteriori appaiono pezzi che appartengono al volante o al turbo, c'è una
-chiara indicazione di qualche problema di design.
-
-Si divida la sezione in sottosezioni, e per ogni aspetto di design che si vuole approfondire, si presenti:
-\begin{enumerate}
-    \item: una breve descrizione in linguaggio naturale del problema che si vuole risolvere, se necessario ci si può aiutare con schemi o immagini;
-    \item: una descrizione della soluzione proposta, analizzando eventuali alternative che sono state prese in considerazione, e che descriva pro e contro della scelta fatta;
-    \item: uno schema UML che aiuti a comprendere la soluzione sopra descritta;
-    \item: se la soluzione è stata realizzata utilizzando uno o più pattern noti, si spieghi come questi sono reificati nel progetto
-    (ad esempio: nel caso di Template Method, qual è il metodo template;
-    nel caso di Strategy, quale interfaccia del progetto rappresenta la strategia, e quali sono le sue implementazioni;
-    nel caso di Decorator, qual è la classe astratta che fa da Decorator e quali sono le sue implementazioni concrete; eccetera);
-\end{enumerate}
-%
-La presenza di pattern di progettazione \emph{correttamente utilizzati} è valutata molto positivamente.
-%
-L'uso inappropriato è invece valutato negativamente: a tal proposito, si raccomanda di porre particolare attenzione all'abuso di Singleton, che, se usato in modo inappropriato, è di fatto un anti-pattern.
-
 \section{Schema concettuale finale}
-
-\paragraph{Problema} GLaDOS ha più personalità intercambiabili, la cui presenza deve essere trasparente al client.
-
-\paragraph{Soluzione} Il sistema per la gestione della personalità utilizza il \textit{pattern Strategy}, come da
-\Cref{img:strategy}: le implementazioni di \texttt{Personality} possono essere modificate, e la
-modifica impatta direttamente sul comportamento di GLaDOS.
 
 \begin{figure}[H]
 \centering{}
@@ -304,35 +276,39 @@ MEDIA & E & 70.000\\
 1 & Registrare/eliminare assicurazioni & 1 al mese\\ \hline
 2 & Registrare/eliminare un assicurato & 500 al giorno\\ \hline
 3 & Erogazione di una nuova polizza da parte di un assicurazione & 75 all'anno\\ \hline
-4 & Registrare/eliminare studi peritali & 50 al mese\\ \hline
-5 & Assumere/licenziare un nuovo perito o dirigente in uno studio & 50.000 al mese\\ \hline
-6 & QUALCOSA SU TEAM???? & E\\ \hline
-7 & Stipulare un nuovo contratto tra assicurato e assicurazione & 1.000 al giorno\\ \hline
-8 & Creare nuovo lavoro e assegnarlo a un perito & 25.000 al giorno\\ \hline
-9 & Creare l’incarico da svolgere in base al lavoro di un perito & 25.000 al giorno\\ \hline
-10 & Aggiornare lo stato di un incarico & 50.000 al giorno\\
+4 & Registrare un nuovo studio peritale & 15 al mese\\ \hline
+5 & Rimuovere uno studio peritale & 15 al mese\\ \hline
+6 & Assumere un nuovo perito o dirigente in uno studio & 5.000 all'anno\\ \hline
+7 & Licenziare un perito di uno studio & 1.500 all'anno\\ \hline
+9 & Stipulare un nuovo contratto tra assicurato e assicurazione & 1.000 al giorno\\ \hline
+10 & Creare nuovo lavoro e assegnarlo a un perito & 25.000 al giorno\\ \hline
+11 & Creare l’incarico da svolgere in base al lavoro di un perito & 25.000 al giorno\\ \hline
+12 & Aggiornare lo stato di un incarico & 50.000 al giorno\\
 \end{tabularx}
 
 \noindent
 \def\arraystretch{2}% 
 \begin{tabularx}{\textwidth}{ >{\centering\arraybackslash}p{2cm} | X |  >{\centering\arraybackslash}p{3cm} }
-11 & Leggere tutti gli incarichi aperti in un determinato studio & 2.000 al giorno\\ \hline
-12 & Aggiungere dei documenti ad un incarico & 35.000 al giorno\\ \hline
-13 & Inserire una video-perizia per un incarico & 30.000 al giorno\\ \hline
-14 & Allegare i media raccolti alla video-perizia & 20.000 al giorno\\ \hline
-15 & Raccogliere tutte le informazioni relative a un incarico (incluse video-perizie e documenti) & 8.000 al giorno\\
+13 & Leggere tutti gli incarichi aperti in un determinato studio & 2.000 al giorno\\ \hline
+14 & Aggiungere dei documenti ad un incarico & 35.000 al giorno\\ \hline
+15 & Inserire una video-perizia per un incarico & 30.000 al giorno\\ \hline
+16 & Allegare i media raccolti alla video-perizia & 20.000 al giorno\\ \hline
+17 & Raccogliere tutte le informazioni relative a un incarico (incluse video-perizie e documenti) & 8.000 al giorno\\
 \end{tabularx}
 \\
 \\
 \section{Schemi di navigazione e tabelle degli accessi}
 
-\subsection{1 - Registrare/eliminare assicurazioni}
+\subsection{1 - Inserire un assicurato}
 
 \def\arraystretch{2}% 
-\begin{tabularx}{\textwidth}{ >{\centering\arraybackslash}p{3cm} | >{\centering\arraybackslash}p{2cm} | >{\centering\arraybackslash}X |  >{\centering\arraybackslash}p{2cm} }
+\begin{tabularx}{\textwidth}{ >{\centering\arraybackslash}p{3cm} | >{\centering\arraybackslash}X | >{\centering\arraybackslash}X |  >{\centering\arraybackslash}X }
     \textbf{Concetto} & \textbf{Costrutto} & \textbf{Accessi} & \textbf{Tipo} \\
 \hline
-Assicurazione & E & 1 & S \\
+Assicurato & E & 1 & S \\
+Assicurato & E & 1 & S \\
+Assicurato & E & 1 & S \\
+Assicurato & E & 1 & S \\
 \end{tabularx}
 \begin{center}
 \textbf{Totale : 1S * 1 al giorno = 2 al giorno}
@@ -341,13 +317,13 @@ Assicurazione & E & 1 & S \\
 \subsection{2 - Registrare/eliminare un assicurato}
 
 \def\arraystretch{2}% 
-\begin{tabularx}{\textwidth}{ >{\centering\arraybackslash}p{3cm} | >{\centering\arraybackslash}p{2cm} | >{\centering\arraybackslash}X |  >{\centering\arraybackslash}p{2cm} }
+\begin{tabularx}{\textwidth}{ >{\centering\arraybackslash}p{3cm} | >{\centering\arraybackslash}X | >{\centering\arraybackslash}X |  >{\centering\arraybackslash}X }
     \textbf{Concetto} & \textbf{Costrutto} & \textbf{Accessi} & \textbf{Tipo} \\
 \hline
 Assicurato & E & 1 & S \\
-Stipulazione & E & 1 & S \\
+Stipulazione & A & 1 & S \\
 Polizza & E & 1 & S \\
-Erogazione & E & 1 & S \\
+Erogazione & A & 1 & S \\
 \end{tabularx}
 \begin{center}
 \textbf{Totale : 4S * 500 al giorno = 4.000 al giorno}
@@ -356,73 +332,115 @@ Erogazione & E & 1 & S \\
 \subsection{3 - Erogazione di una nuova polizza da parte di un assicurazione}
 
 \def\arraystretch{2}% 
-\begin{tabularx}{\textwidth}{ >{\centering\arraybackslash}p{3cm} | >{\centering\arraybackslash}p{2cm} | >{\centering\arraybackslash}X |  >{\centering\arraybackslash}p{2cm} }
+\begin{tabularx}{\textwidth}{ >{\centering\arraybackslash}p{3cm} | >{\centering\arraybackslash}X | >{\centering\arraybackslash}X |  >{\centering\arraybackslash}X }
     \textbf{Concetto} & \textbf{Costrutto} & \textbf{Accessi} & \textbf{Tipo} \\
-\hline
-Assicurato & E & 1 & S \\
-Stipulazione & E & 1 & S \\
-Polizza & E & 1 & S \\
-Erogazione & E & 1 & S \\
+    \hline
+    BOH & E & 1 & S \\
+
 \end{tabularx}
 \begin{center}
-\textbf{Totale : 4S * 500 al giorno = 4.000 al giorno}
+\textbf{Totale :}
 \end{center}
 
-%3 & Erogazione di una nuova polizza da parte di un assicurazione & 75 all'anno\\ \hline
+\subsection{4 - Registrare un nuovo studio peritale}
+Inserire uno studio peritale ci vincola ad aggiungere anche almeno un dipendente e un dirigente, altrimenti lo studio non potrebbe assegnare lavori e svolgere incarichi, ciò vuol dire che si dovrà accedere in scrittura anche in Perito, Dirigente, e relative associazioni.
+\\
+\\
+\def\arraystretch{2}% 
+\begin{tabularx}{\textwidth}{ >{\centering\arraybackslash}p{3cm} | >{\centering\arraybackslash}X | >{\centering\arraybackslash}X |  >{\centering\arraybackslash}X }
+    \textbf{Concetto} & \textbf{Costrutto} & \textbf{Accessi} & \textbf{Tipo} \\
+    \hline
+    Studio Peritale & E & 1 & S \\
+    Dirigente & E & 1 & S \\
+    Direzione & A & 1 & S \\
+    Assunzione & A & 1 & S \\
+    Perito & E & 1 & S \\
+\end{tabularx}
+\begin{center}
+\textbf{Totale : 5S * 15 al mese = 150 al mese}
+\end{center}
+
+\subsection{5 - Rimuovere uno studio peritale}
+Rimuovendo uno studio peritale, comporta che non si deve tenere più traccia dei dipendenti dello studio, inoltre, deve essere messo a NULL il riferimento dello studio, che è presente nei sinistri delegati, lavori, e incarichi attualmente aperti. Uno studio peritale in media ha 33 sinistri e incarichi, 25 lavori, 20 periti e 1 dirigente.
+\\
+\\
+\def\arraystretch{2}% 
+\begin{tabularx}{\textwidth}{ >{\centering\arraybackslash}p{3cm} | >{\centering\arraybackslash}X | >{\centering\arraybackslash}X |  >{\centering\arraybackslash}X }
+    \textbf{Concetto} & \textbf{Costrutto} & \textbf{Accessi} & \textbf{Tipo} \\
+    \hline
+    Studio Peritale & E & 1 & S \\
+    Dirigente & E & 1 & S \\
+    Direzione & A & 1 & S \\
+    Assunzione & A & 20 & S \\
+    Perito & E & 20 & S \\
+    Delegazione & A & 33 & S \\
+    Incarico & E & 33 & S \\
+    Svolgimento & A & 33 & S \\
+    Lavoro & E & 25 & S \\
+    Assegnazione & A & 25 & S \\
+    Ricezione & A & 25 & S \\
+\end{tabularx}
+\begin{center}
+\textbf{Totale : 217S * 15 al mese = 6510 al mese}
+\end{center}
+
+\subsection{6 - Assumere un nuovo perito o dirigente in uno studio}
+Assumere un perito o un dirigente comporta lo stesso numero di accessi per entrambe le operazioni, non c'è nessun vincolo da tenere in considerazione (a parte associarlo allo studio) quindi l'inserimento è immediato.
+\\
+\\
+\def\arraystretch{2}% 
+\begin{tabularx}{\textwidth}{ >{\centering\arraybackslash}p{3cm} | >{\centering\arraybackslash}X | >{\centering\arraybackslash}X |  >{\centering\arraybackslash}X }
+    \textbf{Concetto} & \textbf{Costrutto} & \textbf{Accessi} & \textbf{Tipo} \\
+    \hline
+    Perito / Dirigente & E & 1 & S \\
+    Assunzione / Direzione & A & 1 & S \\
+\end{tabularx}
+\begin{center}
+\textbf{Totale : 2S * 5.000 all'anno = 20.000 all'anno}
+\end{center}
+
+\subsection{7 - Licenziare un perito di uno studio}
+Quando si licenzia un perito lo si deve aggiornare anche nei lavori a lui assegnati e negli incarichi da lui svolti. 
+\\
+\\
+\def\arraystretch{2}% 
+\begin{tabularx}{\textwidth}{ >{\centering\arraybackslash}p{3cm} | >{\centering\arraybackslash}X | >{\centering\arraybackslash}X |  >{\centering\arraybackslash}X }
+    \textbf{Concetto} & \textbf{Costrutto} & \textbf{Accessi} & \textbf{Tipo} \\
+    \hline
+    Perito & E & 1 & S \\
+    Ricezione & A & 1 & S \\
+    Svolgimento & A & 1 & S \\
+    Incarico & E & 1 & S \\
+\end{tabularx}
+\begin{center}
+\textbf{Totale : 4S * 1.500 all'anno = 12.000 all'anno}
+\end{center}
+
+\subsection{10 - Creare nuovo lavoro e assegnarlo a un perito}
+Quando si licenzia un perito lo si deve aggiornare anche nei lavori a lui assegnati e negli incarichi da lui svolti. 
+\\
+\\
+\def\arraystretch{2}% 
+\begin{tabularx}{\textwidth}{ >{\centering\arraybackslash}p{3cm} | >{\centering\arraybackslash}X | >{\centering\arraybackslash}X |  >{\centering\arraybackslash}X }
+    \textbf{Concetto} & \textbf{Costrutto} & \textbf{Accessi} & \textbf{Tipo} \\
+    \hline
+    Perito & E & 1 & S \\
+    Ricezione & A & 1 & S \\
+    Svolgimento & A & 1 & S \\
+    Incarico & E & 1 & S \\
+\end{tabularx}
+\begin{center}
+\textbf{Totale : 4S * 25.000 al giorno = 12.000 all'anno}
+\end{center}
 
 \section{Raffinamento dello schema}
-
-Questa sezione, come quella riguardante il design dettagliato va svolta \textbf{singolarmente da ogni membro del gruppo}.
-
-
 \section{Analisi delle ridondanze}
-
-Questa sezione, come quella riguardante il design dettagliato va svolta \textbf{singolarmente da ogni membro del gruppo}.
-
-
 \section{Traduzione di entità e associazioni in relazioni}
-
-Questa sezione, come quella riguardante il design dettagliato va svolta \textbf{singolarmente da ogni membro del gruppo}.
-
-
 \section{Schema relazionale finale}
-
-Questa sezione, come quella riguardante il design dettagliato va svolta \textbf{singolarmente da ogni membro del gruppo}.
-
-
 \section{Traduzione delle operazioni in query SQL}
 
-Questa sezione, come quella riguardante il design dettagliato va svolta \textbf{singolarmente da ogni membro del gruppo}.
-
-
-
 \chapter{Progettazione dell'applicazione}
-
-In quest'ultimo capitolo si tirano le somme del lavoro svolto e si delineano eventuali sviluppi
-futuri.
-
-\textit{Nessuna delle informazioni incluse in questo capitolo verrà utilizzata per formulare la valutazione finale}, a meno che non sia assente o manchino delle sezioni obbligatorie.
-%
-Al fine di evitare pregiudizi involontari, l'intero capitolo verrà letto dai docenti solo dopo aver formulato la valutazione.
-
 \section{Autovalutazione e lavori futuri}
-
-\textbf{È richiesta una sezione per ciascun membro del gruppo, obbligatoriamente}.
-%
-Ciascuno dovrà autovalutare il proprio lavoro, elencando i punti di forza e di debolezza in quanto prodotto.
-Si dovrà anche cercare di descrivere \emph{in modo quanto più obiettivo possibile} il proprio ruolo all'interno del gruppo.
-Si ricorda, a tal proposito, che ciascuno studente è responsabile solo della propria sezione: non è un problema se ci sono opinioni contrastanti, a patto che rispecchino effettivamente l'opinione di chi le scrive.
-Nel caso in cui si pensasse di portare avanti il progetto, ad esempio perché effettivamente impiegato, o perché sufficientemente ben riuscito da poter esser usato come dimostrazione di esser capaci progettisti, si descriva brevemente verso che direzione portarlo.
-
 \section{Difficoltà incontrate e commenti per i docenti}
-
-Questa sezione, \textbf{opzionale}, può essere utilizzata per segnalare ai docenti eventuali problemi o difficoltà incontrate nel corso o nello svolgimento del progetto, può essere vista come una seconda possibilità di valutare il corso (dopo quella offerta dalle rilevazioni della didattica) avendo anche conoscenza delle modalità e delle difficoltà collegate all'esame, cosa impossibile da fare usando le valutazioni in aula per ovvie ragioni.
-%
-È possibile che alcuni dei commenti forniti vengano utilizzati per migliorare il corso in futuro: sebbene non andrà a vostro beneficio, potreste fare un favore ai vostri futuri colleghi.
-%
-Ovviamente \textit{il contenuto della sezione non impatterà il voto finale}.
-
-
-
 
 \end{document}
