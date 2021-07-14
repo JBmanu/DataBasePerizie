@@ -138,9 +138,9 @@ Ogni \texttt{VIDEO-PERIZIA} ed ogni \texttt{MEDIA} deve essere localizzato per e
     \item \textsc{Rimuovere uno studio peritale}
     \item \textsc{Generare un sinistro e delegarlo a uno studio peritale}
     \item \textsc{Assumere un nuovo perito o dirigente in uno studio}
-    \item \textsc{Licenziare un perito di uno studio}
-    \item \textsc{Creare nuovo lavoro e assegnarlo a un perito}
-    \item \textsc{Creare l’incarico da svolgere in base al lavoro di un perito}
+    \item \textsc{Licenziare il perito di uno studio}
+    \item \textsc{Il dirigente crea un nuovo lavoro e lo assegna a un perito}
+    \item \textsc{Il perito crea l'incarico da svolgere in base al lavoro assegnatogli}
     \item \textsc{Aggiornare lo stato di un incarico}
     \item \textsc{Leggere tutti gli incarichi aperti in un determinato studio}
     \item \textsc{Aggiungere dei documenti ad un incarico}
@@ -273,73 +273,78 @@ MEDIA & E & 70.000\\
 \begin{tabularx}{\textwidth}{ >{\centering\arraybackslash}p{2cm} | X |  >{\centering\arraybackslash}p{3cm} }
     \textbf{Codice} & \textbf{Operazione} & \textbf{Frequenza}\\
 \hline
-1 & Registrare/eliminare assicurazioni & 1 al mese\\ \hline
-2 & Registrare/eliminare un assicurato & 500 al giorno\\ \hline
-3 & Erogazione di una nuova polizza da parte di un assicurazione & 75 all'anno\\ \hline
+1 & Inserire un assicurato & 300 al giorno\\ \hline
+2 & Visualizzare tutte le polizze di un assicurato & 20 al giorno\\ \hline
+3 & Stipulazione di una nuova polizza tra assicurato e assicurazione & 1.000 al giorno\\ \hline
 4 & Registrare un nuovo studio peritale & 15 al mese\\ \hline
 5 & Rimuovere uno studio peritale & 15 al mese\\ \hline
 6 & Assumere un nuovo perito o dirigente in uno studio & 5.000 all'anno\\ \hline
-7 & Licenziare un perito di uno studio & 1.500 all'anno\\ \hline
-9 & Stipulare un nuovo contratto tra assicurato e assicurazione & 1.000 al giorno\\ \hline
-10 & Creare nuovo lavoro e assegnarlo a un perito & 25.000 al giorno\\ \hline
-11 & Creare l’incarico da svolgere in base al lavoro di un perito & 25.000 al giorno\\ \hline
-12 & Aggiornare lo stato di un incarico & 50.000 al giorno\\
+7 & Generare un sinistro e delegarlo a uno studio peritale & 25.000 al giorno\\ \hline
+8 & Licenziare il perito di uno studio & 1.500 all'anno\\ \hline
+9 & Il dirigente crea un nuovo lavoro e lo assegna a un perito & 25.000 al giorno\\ \hline
+10 & Il perito crea l'incarico da svolgere in base al lavoro assegnatogli & 25.000 al giorno\\ \hline
+11 & Aggiornare lo stato di un incarico & 50.000 al giorno\\
 \end{tabularx}
 
 \noindent
 \def\arraystretch{2}% 
 \begin{tabularx}{\textwidth}{ >{\centering\arraybackslash}p{2cm} | X |  >{\centering\arraybackslash}p{3cm} }
-13 & Leggere tutti gli incarichi aperti in un determinato studio & 2.000 al giorno\\ \hline
-14 & Aggiungere dei documenti ad un incarico & 35.000 al giorno\\ \hline
-15 & Inserire una video-perizia per un incarico & 30.000 al giorno\\ \hline
-16 & Allegare i media raccolti alla video-perizia & 20.000 al giorno\\ \hline
-17 & Raccogliere tutte le informazioni relative a un incarico (incluse video-perizie e documenti) & 8.000 al giorno\\
+12 & Leggere tutti gli incarichi aperti in un determinato studio & 2.000 al giorno\\ \hline
+13 & Aggiungere dei documenti ad un incarico & 35.000 al giorno\\ \hline
+14 & Inserire una video-perizia per un incarico & 30.000 al giorno\\ \hline
+15 & Allegare i media raccolti alla video-perizia & 20.000 al giorno\\ \hline
+16 & Raccogliere tutte le informazioni relative a un incarico (incluse video-perizie e documenti) & 8.000 al giorno\\
 \end{tabularx}
 \\
 \\
 \section{Schemi di navigazione e tabelle degli accessi}
 
 \subsection{1 - Inserire un assicurato}
-
-\def\arraystretch{2}% 
-\begin{tabularx}{\textwidth}{ >{\centering\arraybackslash}p{3cm} | >{\centering\arraybackslash}X | >{\centering\arraybackslash}X |  >{\centering\arraybackslash}X }
-    \textbf{Concetto} & \textbf{Costrutto} & \textbf{Accessi} & \textbf{Tipo} \\
-\hline
-Assicurato & E & 1 & S \\
-Assicurato & E & 1 & S \\
-Assicurato & E & 1 & S \\
-Assicurato & E & 1 & S \\
-\end{tabularx}
-\begin{center}
-\textbf{Totale : 1S * 1 al giorno = 2 al giorno}
-\end{center}
-
-\subsection{2 - Registrare/eliminare un assicurato}
-
+Inserire un assicurato implica che abbia stipulato un contratto con un assicurazione.
+\\
+\\
 \def\arraystretch{2}% 
 \begin{tabularx}{\textwidth}{ >{\centering\arraybackslash}p{3cm} | >{\centering\arraybackslash}X | >{\centering\arraybackslash}X |  >{\centering\arraybackslash}X }
     \textbf{Concetto} & \textbf{Costrutto} & \textbf{Accessi} & \textbf{Tipo} \\
 \hline
 Assicurato & E & 1 & S \\
 Stipulazione & A & 1 & S \\
-Polizza & E & 1 & S \\
+Polizze & E & 1 & S \\
 Erogazione & A & 1 & S \\
 \end{tabularx}
 \begin{center}
-\textbf{Totale : 4S * 500 al giorno = 4.000 al giorno}
+\textbf{Totale : 4S * 300 al giorno = 2.400 al giorno}
 \end{center}
 
-\subsection{3 - Erogazione di una nuova polizza da parte di un assicurazione}
+\clearpage
+\subsection{2 - Visualizzare tutte le polizze di un assicurato}
+In media ogni assicurato avrà due polizze.
+\\
+\\
+\def\arraystretch{2}% 
+\begin{tabularx}{\textwidth}{ >{\centering\arraybackslash}p{3cm} | >{\centering\arraybackslash}X | >{\centering\arraybackslash}X |  >{\centering\arraybackslash}X }
+    \textbf{Concetto} & \textbf{Costrutto} & \textbf{Accessi} & \textbf{Tipo} \\
+\hline
+Assicurato & E & 1 & L \\
+Stipulazione & A & 1 & L \\
+Polizze & E & 2 & L \\
+\end{tabularx}
+\begin{center}
+\textbf{Totale : 4L * 20 al giorno = 80 al giorno}
+\end{center}
+
+\subsection{3 - Stipulazione di una nuova polizza tra assicurato e assicurazione}
 
 \def\arraystretch{2}% 
 \begin{tabularx}{\textwidth}{ >{\centering\arraybackslash}p{3cm} | >{\centering\arraybackslash}X | >{\centering\arraybackslash}X |  >{\centering\arraybackslash}X }
     \textbf{Concetto} & \textbf{Costrutto} & \textbf{Accessi} & \textbf{Tipo} \\
     \hline
-    BOH & E & 1 & S \\
-
+    Stipulazione & A & 1 & S \\
+    Polizze & E & 1 & S \\
+    Erogazione & A & 1 & S \\
 \end{tabularx}
 \begin{center}
-\textbf{Totale :}
+\textbf{Totale : 3S * 1.000 al giorno = 6.000 al giorno}
 \end{center}
 
 \subsection{4 - Registrare un nuovo studio peritale}
@@ -361,7 +366,7 @@ Inserire uno studio peritale ci vincola ad aggiungere anche almeno un dipendente
 \end{center}
 
 \subsection{5 - Rimuovere uno studio peritale}
-Rimuovendo uno studio peritale, comporta che non si deve tenere più traccia dei dipendenti dello studio, inoltre, deve essere messo a NULL il riferimento dello studio, che è presente nei sinistri delegati, lavori, e incarichi attualmente aperti. Uno studio peritale in media ha 33 sinistri e incarichi, 25 lavori, 20 periti e 1 dirigente.
+Rimuovere uno studio peritale comporta che non si deve tenere più traccia dei dipendenti dello studio, inoltre, deve essere messo a NULL il riferimento dello studio, che è presente nei sinistri delegati, lavori, e incarichi attualmente aperti. Uno studio peritale in media ha 33 sinistri e incarichi, 25 lavori, 20 periti e 1 dirigente.
 \\
 \\
 \def\arraystretch{2}% 
@@ -399,7 +404,25 @@ Assumere un perito o un dirigente comporta lo stesso numero di accessi per entra
 \textbf{Totale : 2S * 5.000 all'anno = 20.000 all'anno}
 \end{center}
 
-\subsection{7 - Licenziare un perito di uno studio}
+\subsection{7 - Generare un sinistro e delegarlo a uno studio peritale}
+Quando di genera un sinistro si deve per forza specificare anche la categoria.
+\\
+\\
+\def\arraystretch{2}% 
+\begin{tabularx}{\textwidth}{ >{\centering\arraybackslash}p{3cm} | >{\centering\arraybackslash}X | >{\centering\arraybackslash}X |  >{\centering\arraybackslash}X }
+    \textbf{Concetto} & \textbf{Costrutto} & \textbf{Accessi} & \textbf{Tipo} \\
+    \hline
+    Generazione & A & 1 & S \\
+    Sinistro & E & 1 & S \\
+    Specificazione & A & 1 & S \\
+    Categoria\_Sinistro & E & 1 & S \\
+    Delegazione & A & 1 & S \\
+\end{tabularx}
+\begin{center}
+\textbf{Totale : 5S * 25.000 al giorno = 250.000 al giorno}
+\end{center}
+
+\subsection{8 - Licenziare il perito di uno studio}
 Quando si licenzia un perito lo si deve aggiornare anche nei lavori a lui assegnati e negli incarichi da lui svolti. 
 \\
 \\
@@ -416,10 +439,8 @@ Quando si licenzia un perito lo si deve aggiornare anche nei lavori a lui assegn
 \textbf{Totale : 4S * 1.500 all'anno = 12.000 all'anno}
 \end{center}
 
-\subsection{10 - Creare nuovo lavoro e assegnarlo a un perito}
-Quando si licenzia un perito lo si deve aggiornare anche nei lavori a lui assegnati e negli incarichi da lui svolti. 
-\\
-\\
+\subsection{9 - Il dirigente crea un nuovo lavoro e lo assegna a un perito}
+
 \def\arraystretch{2}% 
 \begin{tabularx}{\textwidth}{ >{\centering\arraybackslash}p{3cm} | >{\centering\arraybackslash}X | >{\centering\arraybackslash}X |  >{\centering\arraybackslash}X }
     \textbf{Concetto} & \textbf{Costrutto} & \textbf{Accessi} & \textbf{Tipo} \\
@@ -430,7 +451,26 @@ Quando si licenzia un perito lo si deve aggiornare anche nei lavori a lui assegn
     Incarico & E & 1 & S \\
 \end{tabularx}
 \begin{center}
-\textbf{Totale : 4S * 25.000 al giorno = 12.000 all'anno}
+\textbf{Totale : 4S * 25.000 al giorno = 200.000 all'anno}
+\end{center}
+
+
+
+\subsection{10 - Il perito crea l'incarico da svolgere in base al lavoro assegnatogli}
+L'incarico deve per forza avere annessa una video-perizia.
+\\
+\\
+\def\arraystretch{2}% 
+\begin{tabularx}{\textwidth}{ >{\centering\arraybackslash}p{3cm} | >{\centering\arraybackslash}X | >{\centering\arraybackslash}X |  >{\centering\arraybackslash}X }
+    \textbf{Concetto} & \textbf{Costrutto} & \textbf{Accessi} & \textbf{Tipo} \\
+    \hline
+    Svolgimento & A & 1 & S \\
+    Incarico & E & 1 & S \\
+    Annessione & A & 1 & S \\
+    Video-Perizia & E & 1 & S \\
+\end{tabularx}
+\begin{center}
+\textbf{Totale : 4S * 25.000 al giorno = 200.000 all'anno}
 \end{center}
 
 \section{Raffinamento dello schema}
