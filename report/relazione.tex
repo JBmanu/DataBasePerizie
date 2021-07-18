@@ -7,6 +7,8 @@
 \usepackage{float}
 \usepackage{hyperref}
 \usepackage{caption}
+\usepackage{listings}
+\usepackage{xcolor}
 
 
 % Questo commentalo se vuoi scrivere in inglese.
@@ -40,37 +42,38 @@ Progettazione di una base di dati per la gestione di video perizie}
 
 Si vuole realizzare un database a supporto della gestione di video perizie (perizie a distanza tramite videochiamata) effettuate per varie assicurazioni italiane.
 \\
-La base di dati dovrà immagazzinare informazioni relativo a tutto l’ambito assicurativo, dalle assicurazioni, agli studi peritali che effettueranno le perizie.
+La base di dati dovrà immagazzinare informazioni relative a tutto l’ambito assicurativo, dalle assicurazioni, agli studi peritali che effettueranno le perizie.
 \\
 Si dovrà tenere conto anche di polizze, assicurati, dipendenti, documenti relativi alle video-perizie.
 
 
-\section{Intervista }
+\section{Intervista}
 
 Si vuole tenere traccia di tutte le video-perizie effettuate, di ogni studio peritale e delle parti coinvolte. 
 \\
-Ogni assicurazione dovrà generare sinistri di varia natura (R.C.A., Furto, Incendio, ecc…).
+Ogni assicurazione genererà sinistri di varia natura (R.C.A., Furto, Incendio, ecc…).
 \\
-Questi verranno assegnati agli studi, i quali si occuperanno di portare a termine le attività peritali.
+Gli assicurati stipuleranno dei contratti (polizze) con le agenzie assicurative, queste potranno essere di diversi tipi e avranno un numero identificativo, un costo, un massimale e una data di scadenza.
 \\
-Ogni studio peritale dispone di un supervisore che avrà il compito di ricevere i sinistri che arrivano dalle assicurazioni e di smistarli ai periti del proprio studio.
+Le assicurazioni avranno una propria denominazione e metteranno a disposizione un numero verde, una email e un numero di telefono per i contatti.
 \\
-Il supervisore dello studio quindi creerà un incarico relativo al sinistro arrivatogli e lo assegnerà ad un perito che dovrà svolgere le attività peritali inerenti (video-perizia, richiesta documenti, ecc.. ).
+Tutti i sinistri generati verranno assegnati a vari studi i quali si occuperanno di portare a termine le attività peritali. Per ogni sinistro dovremo tenere traccia del luogo dov’è avvenuto, della descrizione del danno e di quando si è verificato, inoltre sarà specificato da una categoria.
+Il sinistro dovrà essere sempre associato alla parte coinvolta.
 \\
-Ogni incarico conterrà informazioni riguardanti sinistro di riferimento, perito incaricato e stato di avanzamento (Aperto, Chiuso).
+Ogni studio peritale dispone almeno di un supervisore e di un perito, il primo avrà il compito fondamentale di ricevere i sinistri che arrivano dalle assicurazioni e di smistarli ai periti del proprio studio, il secondo sarà colui che svolgerà le pratiche peritali e le effettive video-perizie.
 \\
-Inoltre includerà uno storico delle video-perizie svolte e  l’insieme dei documenti richiesti all’assicurato (come eventuali contratti o documenti personali).
+Il supervisore dello studio quindi creerà un incarico relativo al sinistro arrivatogli e lo assegnerà ad un perito che dovrà svolgere le attività peritali inerenti (video-perizia, richiesta documenti).
 \\
-Il perito quando riceverà l'incarico dal supervisore, dovrà mettersi in contatto con l'assicurato al fine di definire i dettagli per l'effettuazione della video-perizia ed eventualmente richiedere dei documenti per le pratiche preliminari.
+Periti e supervisori, proprio come gli assicurati, dovranno avere i propri dati anagrafici tra cui nome, cognome, data di nascita e codice fiscale. Per essere contattati dovranno rendere disponibili email e numero di telefono.
 \\
-Durante una video-perizia si potranno raccogliere vari media (foto e video) che saranno allegati alla perizia.
+Ogni incarico conterrà informazioni riguardanti sinistro di riferimento, perito incaricato e stato (Aperto, Chiuso).
+Inoltre includerà un elenco delle video-perizie svolte e l’insieme dei documenti richiesti all’assicurato (come eventuali contratti o documenti personali).
+\\
+Ogni video-perizia potrà avere tra gli allegati una serie di media (foto, video) georeferenziati raccolti dal perito durante la videochiamata.
 \\
 Ogni media a sua volta è comprensivo di metadati ricavati dal GPS del dispositivo dell’assicurato.
 \\
-Per ogni documento invece dovremo sapere la sua tipologia e se sarà necessaria o meno la firma dell’assicurato.
-\\
-In questo modo teniamo traccia di ogni sinistro, dall’assicurazione ai tipi di documenti richiesti o alle foto georeferenziate scattate durante la video-perizia.
-
+Per ogni documento invece dovremo conoscere la sua tipologia (per poterlo richiedere all’assicurato).
 
 \section{Definizione delle specifiche in linguaggio naturale ed estrazione dei concetti principali}
 \subsection{Glossario dei termini}
@@ -80,19 +83,18 @@ In questo modo teniamo traccia di ogni sinistro, dall’assicurazione ai tipi di
     \textbf{Termine} & \textbf{Descrizione} & \textbf{Sinonimo} \\
 \hline
 Assicurazione & Colei che riceve da cittadini nuove richieste e crea sinistri & Ente esterno\\ \hline
-Studio & Colei che riceve da cittadini nuove richieste e crea sinistri & Ente esterno\\ \hline
-Supervisore & Colui che, all’interno dello studio, ha il compito di generare incarichi e assegnarli ad uno dei propri periti & Coordinatore, Direttore\\ \hline
+Polizza & Contratto tra Assicurazione e Assicurato & Contratto\\ \hline
+Assicurato & Contraente della Polizza che farà parte alla videoperizia e che si occupa della ripresa del sinistro & Cliente, Parte Coinvolta, Contraente\\ \hline
+Studio Peritale & Colei che riceve da cittadini nuove richieste e crea sinistri & Ufficio, Studio\\ \hline
+Supervisore & Colui che, all’interno dello studio, ha il compito di generare incarichi e assegnarli ad uno dei propri periti & Direttore, Coordinatore\\ \hline
 Perito & Colui che si occupa della attività peritali & Incaricato dal supervisore, membro dello studio/ufficio\\ \hline
-Assicurato & Colui che farà parte alla video-perizia e che si occupa della ripresa del sinistro & Cliente, parte coinvolta\\ \hline
-Sinistro & Danno e relativo tipo di danno da periziare & \\ \hline
-Incarico & Insieme di attività peritali atte all’intero svolgimento della perizia & Fascicolo\\ \hline
-Video-perizia & Perizia eseguita telematicamente tramite smartphone o dispositivo mobile & Perizia telematica, videochiamata
-\\ 
-
+Sinistro & Danno da periziare & \\ \hline
+Incarico & Insieme di attività peritali atte all’intero svolgimento della perizia & Fascicolo\\
 \end{tabularx}
 \noindent
 \def\arraystretch{2}% 
 \begin{tabularx}{\textwidth}{ m{3cm} | m{6cm} | m{3cm}}
+Video-perizia & Perizia eseguita telematicamente tramite smartphone o dispositivo mobile & Perizia telematica, videochiamata \\ \hline
 Documenti & Documenti richiesti al fine di eseguire una perizia completa & \\ \hline
 Media & Media raccolti durante la video-perizia, comprensivi di metadati & Foto, video\\ \hline
 Metadati & Informazioni raccolte dal dispositivo dell’assicurato, in questo caso specifico quelli relativi alla geolocalizzazione & \\
@@ -102,31 +104,24 @@ Metadati & Informazioni raccolte dal dispositivo dell’assicurato, in questo ca
 
 \subsection{Riassunto dei concetti principali}
 
-Ogni Sinistro, è individuato tramite un identificativo incrementale e può essere di un solo \texttt{TIPO\_SINISTRO}.
+Un’\textbf{Assicurazione}, identificata tramite la sua denominazione, genera un sinistro. In fase di creazione del sinistro l’assicurazione potrà decidere se delegarlo subito ad uno studio convenzionato o se farlo successivamente. Lo stesso sinistro può essere assegnato al più ad un ufficio.
 \\
-Un’ Assicurazione, identificata tramite la sua denominazione, cede la gestione del \texttt{SINISTRO} allo \texttt{STUDIO} (identificato dalla P.Iva e da un identificativo incrementale) e lo stesso sinistro non può essere assegnato ad un altro ufficio.
+Ogni \textbf{Sinistro} è individuato tramite un identificativo incrementale e deve essere di una sola \textbf{Categoria Sinistro}.
 \\
-Ogni studio può avere più di un \texttt{SUPERVISORE} ma ne ha almeno uno.
+Ogni \textbf{Polizza} sarà di un unico \textbf{Tipo Polizza}.
 \\
-Gli \texttt{STUDI} possono ricevere sinistri da tutte le \texttt{ASSICURAZIONI} e un \texttt{SUPERVISORE} deve  creare un \texttt{INCARICO} e assegnarne la gestione ad un proprio \texttt{PERITO}.
+Ogni \textbf{Assicurato} potrà stipulare più di una polizza con un’assicurazione, anche con diverse. Inoltre per poter essere  presente nella base di dati deve averne almeno una.
 \\
-Non può essere assegnato un \texttt{INCARICO} a più di un \texttt{PERITO} ma a un \texttt{PERITO} possono essere assegnati più \texttt{INCARICHI} e da più \texttt{SUPERVISORI}.
+Gli \textbf{Studi Peritali} possono essere incaricati da tutte le assicurazioni per gestire un determinato sinistro. All’interno dello studio, uno dei \textbf{Supervisori} ha il compito di creare un \textbf{Incarico} relativo al sinistro e di assegnarne la gestione ad un perito del proprio studio.
+Non può essere assegnato un incarico a più di un perito ma a un perito possono essere assegnati più incarichi e da più supervisori.
 \\
-Il \texttt{PERITO}, che avrà il compito di svolgere le attività peritali inerenti all’\texttt{INCARICO} a lui assegnato, dovrà poter svolgere anche più di una \texttt{VIDEO-PERIZIA} per entrare in contatto con l’\texttt{ASSICURATO} e poter scrivere una descrizione del danno (ad esempio se si vede meglio in altra fase della giornata, danno grande che richiede più videochiamate, ecc...  ).
+Il \textbf{Perito}, che avrà il compito di svolgere le attività peritali inerenti all’incarico a lui assegnato, dovrà poter svolgere anche più di una video-perizia per entrare in contatto con l’assicurato e poter scrivere una descrizione del danno coerente (ad esempio se si vede meglio in altra fase della giornata, danno grande che richiede più videochiamate, ecc... ).
+Potrà anche lavorare a più incarichi alla volta e nello stesso giorno.
 \\
-Potrà anche lavorare a più \texttt{INCARICHI} alla volta e nello stesso giorno.
+La \textbf{Video-perizia} e i \textbf{Media} raccolti, sono esclusivi ad un incarico.
+Ogni incarico possiede anche una raccolta di documenti riguardanti il sinistro.
 \\
-L’\texttt{ASSICURATO} invece sarà registrato tramite un’anagrafica ed identificato mediante il codice fiscale.
-\\
-La \texttt{VIDEO-PERIZIA} e i \texttt{MEDIA} raccolti, sono relativi esclusivamente ad un \texttt{INCARICO}. 
-\\
-Ogni \texttt{INCARICO} possiede anche una raccolta di \texttt{DOCUMENTI} riguardanti il sinistro.
-\\
-I \texttt{DOCUMENTI} riguardano principalmente l’assicurato e il tipo di sinistro, non sapendo quindi quanti documenti possono essere richiesti, non vi è nessun vincolo. 
-\\
-Ogni \texttt{VIDEO-PERIZIA} deve comprendere anche un luogo effettivo e sarà quindi localizzato tramite coordinate e sistema di riferimento. (Altitudine, Latitudine, Longitudine e Est o Ovest).
-\\
-Ogni \texttt{VIDEO-PERIZIA} ed ogni \texttt{MEDIA} deve essere localizzato per essere definita valida.
+I \textbf{Documenti} riguardano principalmente l’assicurato e il tipo di sinistro, non sapendo quindi quanti documenti possono essere richiesti, non vi è nessun vincolo.
 \\
 \\
 \textbf{Segue un elenco delle principali azioni richieste:}
@@ -137,7 +132,7 @@ Ogni \texttt{VIDEO-PERIZIA} ed ogni \texttt{MEDIA} deve essere localizzato per e
     \item \textsc{Registrare un nuovo studio peritale}
     \item \textsc{Rimuovere uno studio peritale}
     \item \textsc{Generare un sinistro e delegarlo a uno studio peritale}
-    \item \textsc{Assumere un nuovo perito o supervisore in uno studio}
+    \item \textsc{Assumere un supervisore in uno studio}
     \item \textsc{Licenziare il perito di uno studio}
     \item \textsc{Il supervisore crea un nuovo incarico e lo assegna a un perito}
     \item \textsc{Leggere tutti gli incarichi aperti in un determinato studio}
@@ -154,20 +149,43 @@ Ogni \texttt{VIDEO-PERIZIA} ed ogni \texttt{MEDIA} deve essere localizzato per e
 
 \section{Schema scheletro}
 
-\textsc{Seguiranno ora dei sotto-schemi E/R iniziali, che verranno raffinati nella sezione successiva}
+\textsc{Seguiranno ora dei sotto-schemi E/R già raffinati e descritti.}
+\\
+\\
+\\
+In primis modelliamo i rapporti tra \textbf{Assicurazioni}, \textbf{Studi Peritali}, e \textbf{Assicurati}.
+\\
+Le assicurazioni sono identificate dalle proprie denominazioni, mentre studi e assicurati da un ID.
+\\
+Un ufficio può assumere sia dirigenti sia periti (almeno uno di 
+entrambi altrimenti nessuno potrebbe svolgere incarichi).
+\\
+Vista la necessità di tenere traccia dove sono avvenuti i sinistri e di dove si trovano gli studi, abbiamo deciso di creare l’entità \textbf{Luogo}, che contiene tutte le informazioni relative a un indirizzo.
+\\
+Un qualunque assicurato deve aver stipulato almeno una \textbf{Polizza} con un’assicurazione, altrimenti non avrebbe nessun legame logico col resto del dominio, al tempo stesso può avere anche molteplici polizze.
+\\
+L’assicurazione può non avere ancora erogato una polizza ad un assicurato. La polizza deve essere unica nel suo genere, viene infatti identificata dalla combinazione di Assicurazione e Assicurato, con l’aggiunta di un numero incrementale.
+\\
+In seguito si ha una collaborazione tra Studi Peritali e Assicurazioni, queste ultime possono generare dei sinistri, che verranno poi delegati ai vari studi.
+\\
+Un \textbf{Sinistro} può essere generato sono da un'assicurazione, e viene delegato solo a uno studio. Ciò vuol dire che diversi studi non possono gestire lo stesso sinistro.
+Ogni sinistro è specificato esclusivamente da una categoria.
 
+\\
+\begin{figure}[ht]
+    \begin{center}
+        \centering
+        \includegraphics[width=\textwidth]{img/Assicurazione.png}
+    \end{center}
+\end{figure}
 \clearpage
 
-Dal dominio identificato in seguito all’intervista si può notare che sono presenti tre entità rappresentanti delle persone: \textbf{Perito}, \textbf{Supervisore} e \textbf{Assicurato}.
+Dal dominio identificato in seguito all’intervista si può notare che sono presenti tre entità rappresentanti persone: \textbf{Perito}, \textbf{Supervisore} e \textbf{Assicurato}. Queste entità quindi sono generalizzate da \textbf{Persona} che raccoglie gli attributi in comune.
+Nello specifico, per quanto riguarda l’assicurato, lo abbiamo messo in relazione con \textbf{Sinistro} per tenere traccia della parte coinvolta.
+Ogni perito e ogni supervisore, potranno far parte solo di uno studio, mentre quest'ultimo potrà assumere diversi periti e supervisori.
+Ogni supervisore potrà assegnare uno o più incarichi ad un perito, ma non necessariamente.
 \\
-Queste entità quindi sono generalizzate da \textbf{Persona}, che raccoglie gli attributi in comune.
 \\
-In seguito si ha una collaborazione tra \textbf{Studi Peritali} e \textbf{Assicurazioni}, uno studio può non avere ancora collaborazioni con le assicurazioni (perché magari creato da poco) e può averne molteplici, invece un’assicurazione deve collaborare con almeno uno studio perché altrimenti non potrebbe lavorare e non avrebbe senso di esistere in questa modellazione.
-\\
-Le assicurazioni sono identificate dalle proprie denominazioni, mentre gli studi da un ID. 
-%poiché è difficile distinguerle per sedi o per partite IVA (una singola P. IVA ) potrebbe avere più studi.
-\\
-Uno studio peritale può assumere sia supervisori (almeno uno altrimenti nessuno smisterebbe gli incarichi) sia periti, abbiamo quindi un associazione ternaria che andremo a rifinire in seguito.
 \\
 \begin{figure}[ht]
     \begin{center}
@@ -177,15 +195,17 @@ Uno studio peritale può assumere sia supervisori (almeno uno altrimenti nessuno
 \end{figure}
 \clearpage
 
-Un \textbf{Perito}, in un determinato momento, può svolgere zero incarichi, ma anche molteplici, invece un \textbf{Incarico} può essere svolto solo da un perito.
+Un perito, in un determinato momento, può non svolgere alcun \textbf{Incarico} ma può anche svolgerne molteplici, invece un incarico può essere svolto esclusivamente da un perito.
 \\
-L’incarico deve per forza avere almeno una \textbf{Video Perizia} annessa (per la corretta esecuzione delle pratiche peritali), inoltre è identificato dalla combinazione di codice e perito.
+Al momento della creazione di un incarico la video-perizia ovviamente non è ancora stata svolta, anche se ne deve essere presente almeno una al momento della chiusura dello stesso (per il corretto svolgimento delle attività peritali).
 \\
-La video perizia può essere eseguita solo in presenza di un incarico, e quindi è identificata da un numero incrementale combinato al codice dell’incarico corrispondente.
+La \textbf{Video\_perizia} può essere eseguita solo in presenza di un incarico, e quindi è identificata da un numero incrementale combinato al codice dell’incarico corrispondente.
 \\
-Durante la videochiamata possono essere scattate \textbf{Foto} e registrati \textbf{Video}, ma non è sempre necessario.
+Durante la videochiamata possono essere acquisiti dei \textbf{Media} di tipo foto o video, ma non è sempre necessario. Questi ultimi, insieme ai documenti richiesti dal perito durante la video-perizia, sono stati generalizzati in File, dato che entrambi hanno una dimensione, un nome, un’estensione e una directory di appartenenza.
 \\
-Questi ultimi sono entità figlie di \textbf{Media}, hanno una dimensione e sono identificati dal nome e dall’estensione del file.
+Anche i \textbf{Documenti} possono essere di vari tipi (es: carta d’identità, verbale di sopralluogo, )
+\\
+I media in particolare dovranno contenere i metadati relativi alla posizione dell’assicurato durante la video-perizia.
 \\
 \begin{figure}[ht]
     \begin{center}
@@ -195,27 +215,15 @@ Questi ultimi sono entità figlie di \textbf{Media}, hanno una dimensione e sono
 \end{figure}
 \clearpage
 
-\section{Raffinamenti proposti}
-
 \section{Schema concettuale finale}
 
-\begin{figure}[H]
-\centering{}
-\includegraphics[width=.7\textwidth]{img/observer}
-\caption{Il pattern Observer è usato per consentire a GLaDOS di informare tutti i sistemi di output in ascolto}
-\label{img:observer}
+\begin{figure}[ht]
+    \begin{center}
+        \centering
+        \hspace*{-0.95in}
+        \includegraphics[scale=.64]{img/ER_Completo.png}
+    \end{center}
 \end{figure}
-
-
-
-\begin{figure}[h]
-\centering{}
-\includegraphics[width=\textwidth]{img/badarch}
-\caption{Schema UML mal fatto e con una pessima descrizione, che non aiuta a capire. Don't try this at home.}
-\label{img:badarch}
-\end{figure}
-
-
 \chapter{Progettazione Logica}
 \section{Stima del volume dei dati}
 
@@ -231,34 +239,34 @@ SPECIFICAZIONE & A & 2.000.000\\ \hline
 TIPO\_POLIZZA & E & 15\\ \hline
 STIPULAZIONE & A & 2.000.000\\ \hline
 ASSICURATO & E & 1.000.000\\ \hline
-LUOGO & E & 100.000\\ \hline
-AVVENIMENTO & A & 100.000\\ \hline
+LUOGO & E & 103.000\\ \hline
+AVVENIMENTO & A & 150.000\\ \hline
 RESIDENZA & A & 3.000\\ \hline
-COINVOLGIMENTO & A & 100.000\\
+COINVOLGIMENTO & A & 150.000\\
 \end{tabularx}
 
 \noindent
 \def\arraystretch{2}% 
 \begin{tabularx}{\textwidth}{ p{6cm} | >{\centering\arraybackslash}p{2cm} | >{\centering\arraybackslash}X }
-GENERAZIONE & A & 100.000\\ \hline
-SINISTRO & E & 100.000\\ \hline
-CATEGORIZZAZIONE & A & 100.000\\ \hline
+GENERAZIONE & A & 150.000\\ \hline
+SINISTRO & E & 150.000\\ \hline
+CATEGORIZZAZIONE & A & 150.000\\ \hline
 CATEGORIA\_SINISTRO & E & 20\\ \hline
-DELEGAZIONE & A & 100.000 \\ \hline
-STUDIO\_PERITALE & E & 3.000\\ \hline
-SUPERVISORE & E & 4.000\\ \hline
-SUPERVISIONE & A & 4.000\\ \hline
-PERITO & E & 60.000\\ \hline
-ASSUNZIONE & A & 60.000\\ \hline
-ASSEGNAZIONE & E & 100.000\\ \hline
-RICEZIONE & A & 100.000\\ \hline
-INCARICO & E & 100.000\\ \hline
-FASCICOLO & A & 100.000\\ \hline
-DOCUMENTO & E & 300.000\\ \hline
-ANNESSIONE & A & 120.000\\ \hline
-VIDEO\_PERIZIA & E & 120.000\\ \hline
-ALLEGATO & A & 50.000\\ \hline
-MEDIA & E & 70.000\\
+DELEGAZIONE & A & 150.000 \\ \hline
+STUDIO\_PERITALE & E & 1.000\\ \hline
+SUPERVISORE & E & 1.000\\ \hline
+SUPERVISIONE & A & 1.000\\ \hline
+PERITO & E & 7.000\\ \hline
+ASSUNZIONE & A & 7.000\\ \hline
+ASSEGNAZIONE & E & 150.000\\ \hline
+RICEZIONE & A & 150.000\\ \hline
+INCARICO & E & 150.000\\ \hline
+FASCICOLO & A & 225.000\\ \hline
+DOCUMENTO & E & 225.000\\ \hline
+ANNESSIONE & A & 200.000\\ \hline
+VIDEO\_PERIZIA & E & 200.000\\ \hline
+ALLEGATO & A & 180.000\\ \hline
+MEDIA & E & 180.000\\
 \end{tabularx}
 
 \clearpage
@@ -269,27 +277,27 @@ MEDIA & E & 70.000\\
     \textbf{Codice} & \textbf{Operazione} & \textbf{Frequenza}\\
 \hline
 1 & Inserire un assicurato & 300 al giorno\\ \hline
-2 & Visualizzare tutte le polizze di un assicurato & 20 al giorno\\ \hline
+2 & Visualizzare tutte le polizze di un assicurato & 50 al giorno\\ \hline
 3 & Stipulazione di una nuova polizza tra assicurato e assicurazione & 1.000 al giorno\\ \hline
-4 & Registrare un nuovo studio peritale & 15 al mese\\ \hline
-5 & Rimuovere uno studio peritale & 15 al mese\\ \hline
-6 & Generare un sinistro e delegarlo a uno studio peritale & 25.000 al giorno\\ \hline
-7 & Assumere un nuovo perito o supervisore in uno studio & 5.000 all'anno\\ \hline
-8 & Licenziare il perito di uno studio & 1.500 all'anno\\ \hline
-9 & Il supervisore crea un nuovo incarico e lo assegna a un perito & 25.000 al giorno\\ \hline
-10 & Leggere tutti gli incarichi aperti in un determinato studio & 2.000 al giorno\\ \hline
-11 & Visualizzare quale assicurato ha svolto una determinata video-perizia & 15.000 al giorno\\ 
+4 & Registrare un nuovo studio peritale & 5 al mese\\ \hline
+5 & Rimuovere uno studio peritale & 5 al mese\\ \hline
+6 & Generare un sinistro e delegarlo a uno studio peritale & 400 al giorno\\ \hline
+7 & Assumere un supervisore in uno studio & 75 all'anno\\ \hline
+8 & Licenziare il perito di uno studio & 150 all'anno\\ \hline
+9 & Il supervisore crea un nuovo incarico e lo assegna a un perito & 400 al giorno\\ \hline
+10 & Leggere tutti gli incarichi aperti in un determinato studio & 3.000 al giorno\\ \hline
+11 & Visualizzare quale assicurato ha svolto una determinata video-perizia & 5.000 al giorno\\ 
 
 \end{tabularx}
 
 \noindent
 \def\arraystretch{2}% 
 \begin{tabularx}{\textwidth}{ >{\centering\arraybackslash}p{2cm} | X |  >{\centering\arraybackslash}p{3cm} }
-12 & Aggiungere un documento ad un incarico & 30.000 al giorno\\ \hline
-13 & Inserire una video-perizia per un incarico & 30.000 al giorno\\ \hline
-14 & Visualizzare il proprietario (assicurato) di un documento & 25.000 al giorno\\ \hline
-15 & Visualizzare in media quanto durano le video-perizie di un determinato studio peritale & 20 al giorno\\ \hline
-16 & Visualizzare a quale sinistro è associato un determinato incarico & 10.000 al giorno
+12 & Aggiungere un documento ad un incarico & 600 al giorno\\ \hline
+13 & Inserire una video-perizia per un incarico & 500 al giorno\\ \hline
+14 & Visualizzare il proprietario (assicurato) di un documento & 5.000 al giorno\\ \hline
+15 & Visualizzare in media quanto durano le video-perizie di un determinato studio peritale & 2.000 al giorno\\ \hline
+16 & Visualizzare a quale sinistro è associato un determinato incarico & 5.000 al giorno
 \end{tabularx}
 \\
 \\
@@ -324,11 +332,11 @@ In media ogni assicurato avrà due polizze.
     \textbf{Concetto} & \textbf{Costrutto} & \textbf{Accessi} & \textbf{Tipo} \\
 \hline
 Assicurato & E & 1 & L \\
-Stipulazione & A & 1 & L \\
+Stipulazione & A & 2 & L \\
 Polizza & E & 2 & L \\
 \end{tabularx}
 \begin{center}
-\textbf{Totale : 4L * 20 al giorno = 80 al giorno}
+\textbf{Totale : 5L * 50 al giorno = 250 al giorno}
 \end{center}
 
 \subsection{3 - Stipulazione di una nuova polizza tra assicurato e assicurazione}
@@ -346,7 +354,7 @@ Polizza & E & 2 & L \\
 \end{center}
 \clearpage
 \subsection{4 - Registrare un nuovo studio peritale}
-Inserire uno studio peritale ci vincola ad aggiungere anche almeno un dipendente e un supervisore, altrimenti lo studio non potrebbe assegnare lavori e svolgere incarichi, ciò vuol dire che si dovrà accedere in scrittura anche in Perito, supervisore, e relative associazioni.
+Inserire uno studio peritale ci vincola ad aggiungere anche almeno un dipendente e un supervisore, altrimenti lo studio non potrebbe assegnare lavori e svolgere incarichi, ciò vuol dire che si dovrà accedere in scrittura anche in Perito, Supervisore, e relative associazioni.
 \\
 \\
 \def\arraystretch{2}% 
@@ -360,14 +368,14 @@ Inserire uno studio peritale ci vincola ad aggiungere anche almeno un dipendente
     Perito & E & 1 & S \\
 \end{tabularx}
 \begin{center}
-\textbf{Totale : 5S * 15 al mese = 150 al mese}
+\textbf{Totale : 5S * 5 al mese = 50 al mese}
 \end{center}
 
 \clearpage
 \subsection{5 - Rimuovere uno studio peritale}
-Rimuovere uno studio peritale implica che non si deve tenere più traccia dei dipendenti, dei lavori e degli incarichi dello studio, inoltre, deve essere eliminata la delegazione del sinistro, in modo tale che possa essere ri-delegato a un altro studio.
+Rimuovere uno studio peritale implica che non si deve tenere più traccia dei dipendenti e degli incarichi dello studio, inoltre, deve essere eliminata la delegazione del sinistro, in modo tale che possa essere ri-delegato a un altro studio.
 \\
-Uno studio peritale in media ha 33 sinistri e incarichi, 20 periti e 1 supervisore.
+Uno studio peritale in media ha 150 sinistri e incarichi, 7 periti e 1 supervisore.
 \\
 \\
 \def\arraystretch{2}% 
@@ -377,21 +385,20 @@ Uno studio peritale in media ha 33 sinistri e incarichi, 20 periti e 1 superviso
     Studio Peritale & E & 1 & S \\
     Supervisore & E & 1 & S \\
     Supervisione & A & 1 & S \\
-    Assunzione & A & 20 & S \\
-    Perito & E & 20 & S \\
-    Delegazione & A & 33 & S \\
-    Incarico & E & 33 & S \\
-    Svolgimento & A & 33 & S \\
-    Assegnazione & A & 33 & S \\
-    Ricezione & A & 33 & S \\
+    Assunzione & A & 7 & S \\
+    Perito & E & 7 & S \\
+    Delegazione & A & 150 & S \\
+    Assegnazione & A & 150 & S \\
+    Incarico & E & 150 & S \\
+    Ricezione & A & 150 & S \\
 \end{tabularx}
 \begin{center}
-\textbf{Totale : 241S * 15 al mese = 7.230 al mese}
+\textbf{Totale : 617S * 5 al mese = 6.170 al mese}
 \end{center}
 \clearpage
 
 \subsection{6 - Generare un sinistro e delegarlo a uno studio peritale}
-Quando di genera un sinistro si deve per forza specificare anche la categoria.
+Quando si genera un sinistro si deve per forza specificare anche la categoria. Per quanto riguarda il luogo dell'avvenimento, non c'è alcun vincolo che mi impone di inserirne uno nuovo ogni volta, perchè il luogo in questione potrebbe essere già presente, tuttavia nella pratica la possibilità che sia così è bassissima, quasi nulla, per questo considero sempre una scrittura in Luogo.
 \\
 \\
 \def\arraystretch{2}% 
@@ -400,32 +407,33 @@ Quando di genera un sinistro si deve per forza specificare anche la categoria.
     \hline
     Generazione & A & 1 & S \\
     Sinistro & E & 1 & S \\
-    Specificazione & A & 1 & S \\
-    Categoria\_Sinistro & E & 1 & S \\
+    Categorizzazione & A & 1 & S \\
     Delegazione & A & 1 & S \\
+    Luogo & E & 1 & S \\
+    Avvenimento & A & 1 & S \\
 \end{tabularx}
 \begin{center}
-\textbf{Totale : 5S * 25.000 al giorno = 250.000 al giorno}
+\textbf{Totale : 6S * 400 al giorno = 4.800 al giorno}
 \end{center}
 
-\subsection{7 - Assumere un nuovo perito o supervisore in uno studio}
-Assumere un perito o un supervisore comporta lo stesso numero di accessi per entrambe le operazioni, non c'è nessun vincolo da tenere in considerazione (a parte associarlo allo studio) quindi l'inserimento è immediato.
+\subsection{7 - Assumere un supervisore in uno studio}
+Quando si assume un supervisore (come quando si assume un perito) non c'è nessun vincolo da tenere in considerazione (a parte associarlo allo studio) quindi l'inserimento è immediato.
 \\
 \\
 \def\arraystretch{2}% 
 \begin{tabularx}{\textwidth}{ >{\centering\arraybackslash}p{3cm} | >{\centering\arraybackslash}X | >{\centering\arraybackslash}X |  >{\centering\arraybackslash}X }
     \textbf{Concetto} & \textbf{Costrutto} & \textbf{Accessi} & \textbf{Tipo} \\
     \hline
-    Perito / Supervisore & E & 1 & S \\
-    Assunzione / Supervisione & A & 1 & S \\
+    Supervisore & E & 1 & S \\
+    Supervisione & A & 1 & S \\
 \end{tabularx}
 \begin{center}
-\textbf{Totale : 2S * 5.000 all'anno = 20.000 all'anno}
+\textbf{Totale : 2S * 75 all'anno = 300 all'anno}
 \end{center}
 
 \clearpage
 \subsection{8 - Licenziare il perito di uno studio}
-Quando si licenzia un perito lo si deve aggiornare anche nei lavori a lui assegnati e negli incarichi da lui svolti. 
+Quando si licenzia un perito, il riferimento del perito in Incarico viene aggiornato automaticamente nel DB. 
 \\
 \\
 \def\arraystretch{2}% 
@@ -437,28 +445,27 @@ Quando si licenzia un perito lo si deve aggiornare anche nei lavori a lui assegn
     Incarico & E & 1 & S \\
 \end{tabularx}
 \begin{center}
-\textbf{Totale : 4S * 1.500 all'anno = 12.000 all'anno}
+\textbf{Totale : 2S * 150 all'anno = 600 all'anno}
 \end{center}
 
-\subsection{9 - Il supervisore crea un nuovo lavoro e lo assegna a un perito}
+\subsection{9 - Il supervisore crea un nuovo incarico e lo assegna a un perito}
 
 \def\arraystretch{2}% 
 \begin{tabularx}{\textwidth}{ >{\centering\arraybackslash}p{3cm} | >{\centering\arraybackslash}X | >{\centering\arraybackslash}X |  >{\centering\arraybackslash}X }
     \textbf{Concetto} & \textbf{Costrutto} & \textbf{Accessi} & \textbf{Tipo} \\
     \hline
-    Perito & E & 1 & S \\
     Ricezione & A & 1 & S \\
     Svolgimento & A & 1 & S \\
     Incarico & E & 1 & S \\
 \end{tabularx}
 \begin{center}
-\textbf{Totale : 4S * 25.000 al giorno = 200.000 all'anno}
+\textbf{Totale : 3S * 400 al giorno = 2.400 al giorno}
 \end{center}
 
 \clearpage
 
 \subsection{10 - Leggere tutti gli incarichi aperti in un determinato studio}
-Considerando che in media ogni studio peritale si occupa di 33 incarichi, e gli stati possono essere due (Aperto e Chiuso), avremo sempre in media 16 letture.
+Considerando che in media ogni studio peritale si occupa di 150 incarichi, e gli stati possono essere 2 (Aperto e Chiuso), avremo sempre in media 75 letture.
 \\
 \\
 \def\arraystretch{2}% 
@@ -466,27 +473,26 @@ Considerando che in media ogni studio peritale si occupa di 33 incarichi, e gli 
     \textbf{Concetto} & \textbf{Costrutto} & \textbf{Accessi} & \textbf{Tipo} \\
     \hline
     Studio Peritale & E & 1 & L \\
-    Incarico & E & 16 & L \\
+    Incarico & E & 75 & L \\
 \end{tabularx}
 \begin{center}
-\textbf{Totale : 17L * 2.000 al giorno = 34.000 al giorno}
+\textbf{Totale : 76L * 3.000 al giorno = 228.000 al giorno}
 \end{center}
 
 
 \subsection{12 - Aggiungere un documento ad un incarico}
-Un incarico in media include un fascicolo di 3 documenti.
+Un incarico in media include un fascicolo di 1/2 documenti.
 \\
 \\
 \def\arraystretch{2}% 
 \begin{tabularx}{\textwidth}{ >{\centering\arraybackslash}p{3cm} | >{\centering\arraybackslash}X | >{\centering\arraybackslash}X |  >{\centering\arraybackslash}X }
     \textbf{Concetto} & \textbf{Costrutto} & \textbf{Accessi} & \textbf{Tipo} \\
     \hline
-    Incarico & E & 1 & L \\
-    Documento & E & 3 & S \\
-    Fascicolo & A & 3 & S \\
+    Documento & E & 1,5 & S \\
+    Fascicolo & A & 1,5 & S \\
 \end{tabularx}
 \begin{center}
-\textbf{Totale : (1L + 6S) * 35.000 al giorno = 26.000 al giorno}
+\textbf{Totale : 3S * 600 al giorno = 3.600 al giorno}
 \end{center}
 
 \subsection{13 - Inserire una video-perizia per un incarico}
@@ -499,11 +505,11 @@ Un incarico in media include un fascicolo di 3 documenti.
     Annessione & A & 1 & S \\
 \end{tabularx}
 \begin{center}
-\textbf{Totale : 2S * 30.000 al giorno = 120.000 al giorno}
+\textbf{Totale : 2S * 500 al giorno = 2.000 al giorno}
 \end{center}
 
 \subsection{15 - Visualizzare in media quanto durano le video-perizie di un determinato studio peritale}
-In media ogni studio peritale esegue 40 video-perizie, di conseguenza andranno lette tutte per poter accedere alla durata di ognuna e farne una media.
+In media ogni studio peritale esegue 200 video-perizie, di conseguenza andranno lette tutte per poter accedere alla durata di ognuna e farne una media.
 \\
 \\
 \def\arraystretch{2}% 
@@ -511,12 +517,11 @@ In media ogni studio peritale esegue 40 video-perizie, di conseguenza andranno l
     \textbf{Concetto} & \textbf{Costrutto} & \textbf{Accessi} & \textbf{Tipo} \\
     \hline
     Studio Peritale & E & 1 & L \\
-    Incarico & E & 33 & L \\
-    Video-Perizia & E & 40 & L \\
-    Annessione & A & 40 & L \\
+    Video-Perizia & E & 200 & L \\
+    Annessione & A & 200 & L \\
 \end{tabularx}
 \begin{center}
-\textbf{Totale : 114L * 20 al giorno = 2.280 al giorno}
+\textbf{Totale : 401L * 2.000 al giorno = 802.000 al giorno}
 \end{center}
 
 \subsection{16 - Visualizzare a quale sinistro è associato un determinato incarico}
@@ -526,25 +531,25 @@ In media ogni studio peritale esegue 40 video-perizie, di conseguenza andranno l
     \textbf{Concetto} & \textbf{Costrutto} & \textbf{Accessi} & \textbf{Tipo} \\
     \hline
     Incarico & E & 1 & L \\
-    Sinistro & E & 1 & L \\
 \end{tabularx}
 \begin{center}
-\textbf{Totale : 2L * 10.000 al giorno = 20.000 al giorno}
+\textbf{Totale : 1L * 5.000 al giorno = 5.000 al giorno}
 \end{center}
 
 \clearpage
 \section{Raffinamento dello schema}
 
 \subsection{Eliminazione delle gerarchie}
-Per l’eliminazione della gerarchia Persona si è scelto di adottare l’approccio del collasso verso il basso, replicando così gli attributi in Assicurato, supervisore e Perito.
-Si è adottata questa strategia in quanto si ha la necessità di trattare nello specifico ogni tipo di persona dando rilievo al ruolo di ognuna, per esempio bisogna ben diversificare i ruoli di supervisore e Perito.
+Per l’eliminazione della gerarchia Persona si è scelto di adottare l’approccio del collasso verso il basso, replicando così gli attributi in Assicurato, Supervisore e Perito.
+Si è scelta questa strategia in quanto si ha la necessità di trattare nello specifico ogni tipo di persona dando rilievo al ruolo di ognuna, per esempio bisogna ben diversificare i ruoli di Supervisore e Perito.
+Per la gerarchia File si è seguita la stessa tecnica, quindi abbiamo replicato gli attributi comuni nelle entità figlie, poiché entrambe hanno ruoli ben distinti all'interno del dominio.
 \\
 \subsection{Eliminazione degli attributi composti}
 Nello schema E/R non è presente alcun attributo composto, l'unico che esisteva in fase di progettazione concettuale era Luogo, ma poi si è deciso di elevarlo direttamente ad entità perché era di rilevante importanza sia per Sinistro che per Studio Peritale.
 Sarà poi necessario accertarsi, a livello applicativo che gli attributi dell'entità Luogo coesistano senza dare origine a incoerenze (Esempio: non potranno esistere luoghi con un cap non corrispondente a quello della città).
 \\
 \subsection{Scelta delle chiavi primarie}
-Nello schema sono già state specificate tutte le chiavi primarie per la maggior parte delle entità, per quanto riguarda le entità della gerarchia Persona invece, si sceglie di usare come chiave primaria un ID univoco invece del codice fiscale, per riuscire a gestire anche i casi di omocodia.
+Nello schema sono già state specificate le chiavi primarie di tutte le entità, per quanto riguarda le entità della gerarchia Persona invece, si sceglie di usare come chiave primaria un ID univoco invece del codice fiscale, per riuscire a gestire anche i casi di omocodia.
 
 \clearpage
 \subsection{Eliminazione degli identificatori esterni}
@@ -569,7 +574,7 @@ Dallo schema principale sono state eliminate le seguenti relazioni:
 \end{itemize}
 \clearpage
 \section{Analisi delle ridondanze}
-Si è deciso di inserire ID\_Assicurato sia in Documento sia in Video\_Perizia, questo perché sono molto frequenti le operazioni che associano i vari documenti e video-perizie, alla parte coinvolta. Di seguito è mostrata la differenza tra i due casi, in termini di accessi, in entrambe le operazioni.
+Si è deciso di inserire ID\_Assicurato sia in Documento sia in Video\_Perizia perché sono molto frequenti le operazioni che associano i vari documenti e video-perizie alla parte coinvolta. Di seguito è mostrata la differenza tra i due casi, in termini di accessi, in entrambe le operazioni.
 \\
 \subsection{11 - Visualizzare quale assicurato ha svolto una determinata video-perizia}
 
@@ -588,7 +593,7 @@ Si è deciso di inserire ID\_Assicurato sia in Documento sia in Video\_Perizia, 
     Assicurato & E & 1 & L \\
 \end{tabularx}
 \begin{center}
-\textbf{Totale : 6L * 15.000 al giorno = 90.000 al giorno}
+\textbf{Totale : 6L * 5.000 al giorno = 30.000 al giorno}
 \end{center}
 
 \textbf{Con ridondanza}
@@ -601,7 +606,7 @@ Si è deciso di inserire ID\_Assicurato sia in Documento sia in Video\_Perizia, 
     Video-perizia & E & 1 & L \\
 \end{tabularx}
 \begin{center}
-\textbf{Totale : 1L * 15.000 al giorno = 15.000 al giorno}
+\textbf{Totale : 1L * 5.000 al giorno = 5.000 al giorno}
 \end{center}
 
 \clearpage
@@ -623,7 +628,7 @@ Si è deciso di inserire ID\_Assicurato sia in Documento sia in Video\_Perizia, 
     Assicurato & E & 1 & L \\
 \end{tabularx}
 \begin{center}
-\textbf{Totale : 6L * 15.000 al giorno = 90.000 al giorno}
+\textbf{Totale : 6L * 5.000 al giorno = 30.000 al giorno}
 \end{center}
 
 \textbf{Con ridondanza}
@@ -636,7 +641,7 @@ Si è deciso di inserire ID\_Assicurato sia in Documento sia in Video\_Perizia, 
    Documento & E & 1 & L \\
 \end{tabularx}
 \begin{center}
-\textbf{Totale : 1L * 15.000 al giorno = 15.000 al giorno}
+\textbf{Totale : 1L * 5.000 al giorno = 5.000 al giorno}
 \end{center}
 
 \clearpage
@@ -646,28 +651,28 @@ Si è deciso di inserire ID\_Assicurato sia in Documento sia in Video\_Perizia, 
 \textbf{Assicurati}(\underline{ID\_Assicurato}, Nome, Cognome, DataNascita, CodiceFiscale, Telefono, Email)
 \\
 \\
-\textbf{Polizze}(\underline{Numero}, \underline{Tipo}, \underline{Assicurato}, \underline{Assicurazione} Massimale, Costo, Scadenza) \\
-FK: Tipo \texttt{REFERENCES} Tipi\_Polizze  \\
+\textbf{Polizze}(\underline{Numero}, \underline{Assicurato}, \underline{Assicurazione} Massimale, Costo, Scadenza, Tipo) \\
 FK: Assicurato \texttt{REFERENCES} Assicurati \\
 FK: Assicurazione \texttt{REFERENCES} Assicurazioni \\
+FK: Tipo \texttt{REFERENCES} Tipi\_Polizze  \\
 \\
 \textbf{Tipi\_Polizze}(\underline{Tipo}, Descrizione)
 \\
 \\
-\textbf{Assicurazioni}(\underline{Denominazione}, Telefono, NumeroVerde, Email) \\
+\textbf{Assicurazioni}(\underline{Denominazione}, Email, Telefono, NumeroVerde) \\
 \\
-\textbf{Categorie\_Sinistri}(\underline{Categoria}, Descrizione) \\
+\textbf{Categorie\_Sinistri}(\underline{Appellativo}, Descrizione) \\
 \\
-\textbf{Sinistri}(\underline{ID\_Sinistro}, \underline{Assicurazione}, Assicurato, Categoria, Luogo, Studio\_Peritale, Descrizione) \\
+\textbf{Sinistri}(\underline{ID\_Sinistro}, \underline{Assicurazione}, Descrizione, Data,  Categoria, Luogo, Assicurato, StudioPeritale) \\
 FK: Assicurazione \texttt{REFERENCES} Assicurazioni \\
 FK: Assicurato \texttt{REFERENCES} Assicurati \\
 FK: Categoria \texttt{REFERENCES} Categorie\_Sinistri  \\
 FK: Luogo \texttt{REFERENCES} Luoghi \\
-FK: Studio\_Peritale \texttt{REFERENCES} Studio\_Peritali \\
+FK: StudioPeritale \texttt{REFERENCES} Studi\_Peritali \\
 \\
-\textbf{Luoghi}(\underline{ID\_Luogo}, Via, Civico, Comune, Provincia, Citta, CAP) \\
+\textbf{Luoghi}(\underline{ID\_Luogo}, Via, NumeroCivico, Citta, Comune, Provincia, CAP) \\
 \\
-\textbf{Studi\_Peritali}(\underline{ID\_Studio}, Luogo, Nome, Telefono, Email) \\
+\textbf{Studi\_Peritali}(\underline{ID\_Studio},  Nome, Email, Telefono, Luogo) \\
 FK: Luogo \texttt{REFERENCES} Luoghi \\
 \\
 \textbf{Supervisori}(\underline{ID\_Supervisore}, Nome, Cognome, DataNascita, CodiceFiscale, Telefono, Email) \\
@@ -677,22 +682,199 @@ FK: Studio \texttt{REFERENCES} Studi\_Peritali \\
 FK: Studio \texttt{REFERENCES} Studi\_Peritali \\
 \clearpage
 \noindent
-\textbf{Incarichi}(\underline{ID\_Incarico}, Perito, Supervisore, ID\_Sinistro, Stato) \\
-FK: Perito \texttt{REFERENCES} Periti \\
+\textbf{Incarichi}(\underline{ID\_Incarico}, ID\_Sinistro, Stato, Supervisore, Perito) \\
 FK: Supervisore \texttt{REFERENCES} Supervisori \\
+FK: Perito \texttt{REFERENCES} Periti \\
 \\
-\textbf{Documenti}(\underline{ID\_Documento}, Incarico, Tipo) \\
+\textbf{Documenti}(\underline{ID\_Documento}, Nome, Estensione, Dimensione, Directory, Tipo, ID\_Assicurato, Incarico) \\
 FK: Incarico \texttt{REFERENCES} Incarichi \\
 \\
 \textbf{Video\_Perizie}(\underline{NumeroPerizia}, \underline{Incarico}, Durata) \\
 FK: Incarico \texttt{REFERENCES} Incarichi \\
 \\
-\textbf{Media}(\underline{NumeroMedia}, \underline{Video\_Perizia}, \underline{Incarico}, Tipo, Nome, Estensione, Dimensione, Metadati) \\
+\textbf{Media}(\underline{NumeroMedia}, \underline{Video\_Perizia}, \underline{Incarico}, Nome, Estensione, Dimensione, Directory, Tipo, Metadati) \\
 FK: Incarico \texttt{REFERENCES} Incarichi \\
 FK: Video\_Perizia \texttt{REFERENCES} Video\_Perizie \\
 
+\clearpage
 \section{Schema relazionale finale}
+
+\begin{figure}[ht]
+    \begin{center}
+        \centering
+        \includegraphics[width=\textwidth]{img/Relazionale1.png}
+    \end{center}
+\end{figure}
+
+\clearpage
+\begin{figure}[ht]
+    \begin{center}
+        \centering
+        \includegraphics[width=\textwidth]{img/Relazionale2.png}
+    \end{center}
+\end{figure}
+
+\clearpage
 \section{Traduzione delle operazioni in query SQL}
+
+Nelle query di inserimento, se viene omesso l'identificativo del record è perché la chiave primaria in quel caso è auto incrementale.
+
+\definecolor{backcolour}{rgb}{0.96,0.96,0.96}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{blue},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+\begin{lstlisting}[language=SQL]
+/* 
+    Operazione 1 - Inserire un assicurato
+*/
+BEGIN TRANSACTION;
+    DECLARE @Assicurato INT
+    SET @Assicurato = (SELECT TOP 1 ID_Assicurato
+                    FROM Assicurati
+                    ORDER BY ID_Assicurato DESC) + 1;
+    INSERT INTO Assicurati (Nome, Cognome, DataNascita, CodiceFiscale, Telefono, Email) 
+    VALUES (?, ?, ?, ?, ?, ?);
+    INSERT INTO Polizze (Tipo, Assicurato, Assicurazione, Massimale, Costo, Scadenza) 
+    VALUES (?, @Assicurato, ?, ?, ?, ?);
+COMMIT;
+
+/*
+    Operazione 2 - Visualizzare tutte le polizze di un assicurato
+*/
+SELECT *
+FROM Polizze
+WHERE Assicurato = ?;
+
+/*
+    Operazione 3 - Stipulazione di una nuova polizza tra assicurato e  assicurazione
+*/
+INSERT INTO Polizze (Tipo, Assicurato, Assicurazione, Massimale, Costo, Scadenza) 
+VALUES (?, ?, ?, ?, ?, ?);
+
+/*
+    Operazione 4 - Registrare un nuovo studio peritale 
+*/
+BEGIN TRANSACTION;
+    INSERT INTO Luoghi (Provincia, Via, NumeroCivico, CAP, Comune, Citta)
+    VALUES (?, ?, ?, ?, ?, ?);
+    INSERT INTO Studi_Peritali (Luogo, Nome, Telefono, Email) 
+    VALUES (?, ?, ?, ?);
+    INSERT INTO Supervisori (Nome, Cognome, DataNascita, CodiceFiscale, Telefono, Email) 
+    VALUES (?, ?, ?, ?, ?, ?);
+    INSERT INTO Periti (Nome, Cognome, DataNascita, CodiceFiscale, Telefono, Email) 
+    VALUES (?, ?, ?, ?, ?, ?);
+COMMIT;
+
+/*
+    Operazione 5 - Rimuovere uno studio peritale 
+*/
+DELETE FROM Studi_Peritali WHERE ?;
+
+/*
+    Operazione 6 - Generare un sinistro e delegarlo a uno studio peritale
+*/
+INSERT INTO Sinistri (ID_Sinistro, Assicurazione, Descrizione, Data, Categoria, Luogo, Studio_Peritale, Assicurato)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+
+/*
+    Operazione 7 - Assumere un supervisore in uno studio
+*/
+INSERT INTO Supervisori (Nome, Cognome, DataNascita, CodiceFiscale, Telefono, Email) 
+VALUES (?, ?, ?, ?, ?, ?);
+
+/*
+    Operazione 8 - Licenziare il perito di uno studio 
+*/
+DELETE FROM Perito
+WHERE ?;
+
+/*
+    Operazione 9 - Il  supervisore  crea  un  nuovo  incarico  e  lo  assegna  a  un perito 
+*/
+INSERT INTO Incarichi (Perito, Supervisore, ID_Sinistro, Stato)
+VALUES (?, ?, ?, ?);
+
+/*
+    Operazione 10 - Leggere tutti gli incarichi aperti in un determinato studio
+*/
+SELECT *
+FROM Incarichi
+WHERE Stato == 'Aperto' AND ID_Studio = ?;
+
+/*
+    Operazione 11 - Visualizzare quale assicurato ha svolto una determinata video-perizia 
+*/
+SELECT ID_Assicurato
+FROM Video_Perizie
+WHERE ?;
+
+/*
+    Operazione 12 - Aggiungere un documento ad un incarico 
+*/
+INSERT INTO Documenti (ID_Incarico, Incarico, Tipo)
+VALUES (?, ?, ?);
+
+/*
+    Operazione 13 - Inserire una video-perizia per un incarico 
+*/
+INSERT INTO Video_Perizie (Incarico, Durata)
+VALUES (?, ?);
+
+/*
+    Operazione 14 - Visualizzare il proprietario (assicurato) di un documento
+*/
+SELECT ID_Assicurato
+FROM Documenti
+WHERE ?;
+
+/*
+    Operazione 15 - Visualizzare in media quanto durano le video-perizie di un determinato studio peritale 
+*/
+SELECT AVG(Durata) AS DurataMedia
+FROM Video_Perizie AS Perizie
+INNER JOIN Incarichi 
+ON Perizie.Incarico = Incarichi.ID_Incarico
+INNER JOIN Supervisori
+ON Incarichi.Supervisore = Supervisori.ID_Supervisore
+INNER JOIN Studi_Peritali 
+ON Supervisori.Studio = Studi_Peritali.ID_Studio
+WHERE Studio = ?;
+
+/*
+    Operazione 16 - Qual e' la provincia nella quale avvengono piu' sinistri
+*/
+SELECT TOP 1 Provincia, COUNT(*) as TotaleIncarichi
+FROM Sinistri 
+INNER JOIN Luoghi
+ON Sinistri.ID_Luogo = Luoghi.ID_Luogo
+GROUP BY Provincia
+ORDER BY TotaleIncarichi DESC;
+\end{lstlisting}
+
+
+
+
 
 \chapter{Progettazione dell'applicazione}
 
