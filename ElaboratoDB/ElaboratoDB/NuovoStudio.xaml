@@ -1,0 +1,64 @@
+﻿<Window x:Class="ElaboratoDB.NuovoStudio"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ElaboratoDB"
+        mc:Ignorable="d"
+        Title="Nuovo Studio" Height="639.265" Width="864.853">
+    <Grid>
+        <Canvas Visibility="Visible" x:Name="StudioCanvas" Margin="10,10,614,0">
+            <Label x:Name="lbl_Studio" Content="Creazione Studio" Canvas.Top="58" FontSize="14"/>
+            <TextBox x:Name="txt_NomeStudio" Height="23" Canvas.Left="10" TextWrapping="Wrap" Canvas.Top="124" Width="120"/>
+            <TextBox x:Name="txt_TelefonoStudio" Height="23" Canvas.Left="10" TextWrapping="Wrap" Canvas.Top="181" Width="120"/>
+            <TextBox x:Name="txt_ViaStudio" Height="23" Canvas.Left="14" TextWrapping="Wrap" Canvas.Top="351" Width="120"/>
+            <Label x:Name="lbl_IndirizzoStudio" Content="Indirizzo:" Canvas.Top="293" Canvas.Left="12" RenderTransformOrigin="0.543,1.48" FontSize="14"/>
+            <TextBox x:Name="txt_EmailStudio" Height="23" Canvas.Left="10" TextWrapping="Wrap" Canvas.Top="243" Width="120"/>
+            <TextBox x:Name="txt_CivicoStudio" Height="23" Canvas.Left="139" TextWrapping="Wrap" Canvas.Top="351" Width="65"/>
+            <TextBox x:Name="txt_ProvinciaStudio" Height="23" Canvas.Left="14" TextWrapping="Wrap" Canvas.Top="502" Width="120"/>
+            <TextBox x:Name="txt_CittaStudio" Height="23" Canvas.Left="14" TextWrapping="Wrap" Canvas.Top="403" Width="120"/>
+            <TextBox x:Name="txt_StudioCAP" Height="23" Canvas.Left="139" TextWrapping="Wrap" Canvas.Top="403" Width="65"/>
+            <Label x:Name="lbl_IndirizzoStudio_Copy" Content="Nome" Canvas.Top="98" Canvas.Left="12"/>
+            <Label x:Name="lbl_IndirizzoStudio_Copy1" Content="Telefono" Canvas.Top="152" Canvas.Left="10" RenderTransformOrigin="0.546,-0.56"/>
+            <Label x:Name="lbl_IndirizzoStudio_Copy3" Content="E-Mail" Canvas.Top="212" Canvas.Left="12"/>
+            <Label x:Name="lbl_IndirizzoStudio_Copy4" Content="Via" Canvas.Top="325" Canvas.Left="14"/>
+            <Label x:Name="lbl_IndirizzoStudio_Copy5" Content="Num. Civico" Canvas.Top="325" Canvas.Left="137"/>
+            <Label x:Name="lbl_IndirizzoStudio_Copy6" Content="Città" Canvas.Top="377" Canvas.Left="14"/>
+            <Label x:Name="lbl_IndirizzoStudio_Copy7" Content="CAP" Canvas.Top="377" Canvas.Left="137"/>
+            <Label x:Name="lbl_IndirizzoStudio_Copy8" Content="Comune" Canvas.Top="426" Canvas.Left="14"/>
+            <TextBox x:Name="txt_ComuneStudio" Height="23" Canvas.Left="14" TextWrapping="Wrap" Canvas.Top="452" Width="120"/>
+            <Label x:Name="lbl_IndirizzoStudio_Copy9" Content="Provincia (Es. RN)" Canvas.Top="471" Canvas.Left="14"/>
+        </Canvas>
+        <Canvas Visibility="Visible" x:Name="PeritoCanvas" Margin="318,74,357,177">
+            <Label x:Name="lbl_Perito" Content="Anagrafica supervisore" FontSize="14"/>
+            <TextBox x:Name="txt_Nome1Supervisore" Height="23" Canvas.Left="10" TextWrapping="Wrap" Canvas.Top="57" Width="120"/>
+            <TextBox x:Name="txt_Cognome1Supervisore" Height="23" Canvas.Left="10" TextWrapping="Wrap" Canvas.Top="106" Width="120"/>
+            <TextBox x:Name="txt_CodiceFiscale1Supervisore" Height="23" Canvas.Left="10" TextWrapping="Wrap" Canvas.Top="155" Width="120"/>
+            <DatePicker x:Name="data1Supervisore" Canvas.Left="10" Canvas.Top="258" Width="122" RenderTransformOrigin="0.703,2.701"/>
+            <Label x:Name="lbl_DataNascita1Supervisore" Content="Data di Nascita:" Canvas.Top="232" Canvas.Left="8"/>
+            <TextBox x:Name="txt_Telefono1Supervisore" Height="23" Canvas.Left="10" TextWrapping="Wrap" Canvas.Top="204" Width="120"/>
+            <Label x:Name="lbl_DataNascitaPerito_Copy1" Content="Telefono" Canvas.Top="178" Canvas.Left="8"/>
+            <Label x:Name="lbl_DataNascitaPerito_Copy2" Content="Codice Fiscale" Canvas.Top="129" Canvas.Left="8"/>
+            <Label x:Name="lbl_DataNascitaPerito_Copy3" Content="Cognome" Canvas.Top="80" Canvas.Left="10"/>
+            <Label x:Name="lbl_DataNascitaPerito_Copy4" Content="Nome" Canvas.Top="31" Canvas.Left="8"/>
+            <Label x:Name="lbl_DataNascitaPerito_Copy5" Content="E-Mail" Canvas.Top="287" Canvas.Left="8"/>
+            <TextBox x:Name="txt_Email1Supervisore" Height="23" Canvas.Left="10" TextWrapping="Wrap" Canvas.Top="313" Width="120"/>
+        </Canvas>
+        <Canvas Visibility="Visible" x:Name="PeritoCanvas_Copy" Margin="612,74,81,177">
+            <Label x:Name="lbl_Perito1" Content="Anagrafica perito" FontSize="14" Canvas.Top="2"/>
+            <TextBox x:Name="txt_Nome1Perito" Height="23" Canvas.Left="10" TextWrapping="Wrap" Canvas.Top="57" Width="120"/>
+            <TextBox x:Name="txt_Cognome1Perito" Height="23" Canvas.Left="10" TextWrapping="Wrap" Canvas.Top="106" Width="120"/>
+            <TextBox x:Name="txt_CodiceFiscale1Perito" Height="23" Canvas.Left="10" TextWrapping="Wrap" Canvas.Top="155" Width="120"/>
+            <DatePicker x:Name="data1Perito" Canvas.Left="10" Canvas.Top="258" Width="122" RenderTransformOrigin="0.703,2.701"/>
+            <Label x:Name="lbl_DataNascita1Perito" Content="Data di Nascita:" Canvas.Top="232" Canvas.Left="8"/>
+            <TextBox x:Name="txt_Telefono1Perito" Height="23" Canvas.Left="10" TextWrapping="Wrap" Canvas.Top="204" Width="120"/>
+            <Label x:Name="lbl_DataNascitaPerito_Copy6" Content="Telefono" Canvas.Top="178" Canvas.Left="8"/>
+            <Label x:Name="lbl_DataNascitaPerito_Copy7" Content="Codice Fiscale" Canvas.Top="129" Canvas.Left="8"/>
+            <Label x:Name="lbl_DataNascitaPerito_Copy8" Content="Cognome" Canvas.Top="80" Canvas.Left="10"/>
+            <Label x:Name="lbl_DataNascitaPerito_Copy9" Content="Nome" Canvas.Top="31" Canvas.Left="8"/>
+            <Label x:Name="lbl_DataNascitaPerito_Copy10" Content="E-Mail" Canvas.Top="287" Canvas.Left="8"/>
+            <TextBox x:Name="txt_Email1Perito" Height="23" Canvas.Left="10" TextWrapping="Wrap" Canvas.Top="313" Width="120"/>
+        </Canvas>
+        <Button x:Name="btn_InsertNewStudio" Content="CONFERMA" Click="btn_InsertNewStudio_Click" Margin="285,543,410,35"/>
+    </Grid>
+</Window>

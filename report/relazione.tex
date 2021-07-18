@@ -170,7 +170,6 @@ In seguito si ha una collaborazione tra Studi Peritali e Assicurazioni, queste u
 \\
 Un \textbf{Sinistro} può essere generato sono da un'assicurazione, e viene delegato solo a uno studio. Ciò vuol dire che diversi studi non possono gestire lo stesso sinistro.
 Ogni sinistro è specificato esclusivamente da una categoria.
-
 \\
 \begin{figure}[ht]
     \begin{center}
@@ -878,7 +877,115 @@ ORDER BY TotaleIncarichi DESC;
 
 \chapter{Progettazione dell'applicazione}
 
+Per sviluppare l'applicazione si è scelto di usare SQL Server e il linguaggio C\#.
+Abbiamo creato un'applicazione WPF per creare una semplice interfaccia grafica.
+Inoltre si è utilizzato LINQ per eseguire le interrogazioni al database sfruttando le funzionalità della programmazione ad oggetti.
+L'applicazione è divisa in sezioni, in seguito verranno mostrate le principali funzionalità.
 
-Descrizione con screen
+\section{Visualizza}
+Si possono visualizzare tutti i record di tutte le tabelle del database, senza alcuna condizione
+
+\begin{figure}[ht]
+    \begin{center}
+        \centering
+        \includegraphics[scale=0.3]{img/Applicazione/Visualizza.png}
+    \end{center}
+\end{figure}
+\clearpage
+
+\section{Inserisci}
+Si possono inserire vari tipi di record in quasi tutte le tabelle, rispettando sempre i vincoli impostati durante la creazione del database
+
+\begin{figure}[ht]
+    \begin{center}
+        \centering
+        \includegraphics[width=\textwidth]{img/Applicazione/Inserisci1.png}
+    \end{center}
+\end{figure}
+\clearpage
+\begin{figure}[ht]
+    \begin{center}
+        \centering
+        \includegraphics[width=\textwidth]{img/Applicazione/Inserisci2.png}
+    \end{center}
+\end{figure}
+\clearpage
+\begin{figure}[ht]
+    \begin{center}
+        \centering
+        \includegraphics[width=\textwidth]{img/Applicazione/Inserisci3.png}
+    \end{center}
+\end{figure}
+\clearpage
+\section{Elimina}
+Si possono eliminare i record dato in input la chiave primaria correttamente
+
+\begin{figure}[ht]
+    \begin{center}
+        \centering
+        \includegraphics[scale=1]{img/Applicazione/Elimina.png}
+    \end{center}
+\end{figure}
+
+\clearpage
+\section{Polizza}
+Si possono gestire le stipulazioni di nuove polizze tra assicurati e assicurazioni.
+
+\begin{figure}[ht]
+    \begin{center}
+        \centering
+        \includegraphics[width=\textwidth]{img/Applicazione/Polizza.png}
+    \end{center}
+\end{figure}
+\clearpage
+\section{Sinistro}
+Si possono gestire i sinistri generati dalle assicurazioni, si può decidere di delegarli subito a uno studio peritale oppure farlo successivamente.
+
+\begin{figure}[ht]
+    \begin{center}
+        \centering
+        \includegraphics[width=\textwidth]{img/Applicazione/Sinistro1.png}
+    \end{center}
+\end{figure}
+
+\clearpage
+
+\begin{figure}[ht]
+    \begin{center}
+        \centering
+        \includegraphics[width=\textwidth]{img/Applicazione/Sinistro2.png}
+    \end{center}
+\end{figure}
+\clearpage
+\section{Incarico}
+Si possono creare e assegnare incarichi in un determinato studio, dando in input il supervisore il programma capisce automaticamente di che studio fa parte e propone i periti appartenenti a cui poter assegnare il nuovo incarico.
+
+\begin{figure}[ht]
+    \begin{center}
+        \centering
+        \includegraphics[width=\textwidth]{img/Applicazione/Incarichi.png}
+    \end{center}
+\end{figure}
+
+\clearpage
+\section{Video-perizia}
+Si possono creare video-perizie, allegare media ad esse fornendo i dati giusti.
+
+\begin{figure}[ht]
+    \begin{center}
+        \centering
+        \includegraphics[width=\textwidth]{img/Applicazione/VideoPerizia.png}
+    \end{center}
+\end{figure}
+\clearpage
+\section{Documento}
+Si possono allegare i documenti agli incarichi presenti nella base di dati.
+
+\begin{figure}[ht]
+    \begin{center}
+        \centering
+        \includegraphics[scale=0.6]{img/Applicazione/Documento.png}
+    \end{center}
+\end{figure}
 
 \end{document}

@@ -1,0 +1,175 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="Teleperizia" Class="TeleperiziaDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=(LocalDB)\MSSQLLocalDB;Initial Catalog=Teleperizia;Integrated Security=True" SettingsObjectName="ElaboratoDB.Properties.Settings" SettingsPropertyName="TeleperiziaConnectionString1" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Assicurati" Member="Assicurati">
+    <Type Name="Assicurati">
+      <Column Name="ID_Assicurato" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Nome" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Cognome" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="DataNascita" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="Email" Type="System.String" DbType="VarChar(80)" CanBeNull="true" />
+      <Column Name="CodiceFiscale" Type="System.String" DbType="VarChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="Telefono" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Association Name="Assicurati_Polizze" Member="Polizze" ThisKey="ID_Assicurato" OtherKey="Assicurato" Type="Polizze" />
+      <Association Name="Assicurati_Sinistri" Member="Sinistri" ThisKey="ID_Assicurato" OtherKey="Assicurato" Type="Sinistri" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Video_Perizie" Member="Video_Perizie">
+    <Type Name="Video_Perizie">
+      <Column Name="NumeroPerizia" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ID_Incarico" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Durata" Type="System.Single" DbType="Real NOT NULL" CanBeNull="false" />
+      <Column Name="Data" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Association Name="Video_Perizie_Media" Member="Media" ThisKey="NumeroPerizia,ID_Incarico" OtherKey="NumeroPerizia,Incarico" Type="Media" />
+      <Association Name="Incarichi_Video_Perizie" Member="Incarichi" ThisKey="ID_Incarico" OtherKey="ID_Incarico" Type="Incarichi" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Assicurazioni" Member="Assicurazioni">
+    <Type Name="Assicurazioni">
+      <Column Name="Denominazione" Type="System.String" DbType="VarChar(100) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Email" Type="System.String" DbType="VarChar(80) NOT NULL" CanBeNull="false" />
+      <Column Name="Telefono" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="NumeroVerde" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Association Name="Assicurazioni_Polizze" Member="Polizze" ThisKey="Denominazione" OtherKey="Assicurazione" Type="Polizze" />
+      <Association Name="Assicurazioni_Sinistri" Member="Sinistri" ThisKey="Denominazione" OtherKey="Assicurazione" Type="Sinistri" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Categoria_Sinistri" Member="Categoria_Sinistri">
+    <Type Name="Categoria_Sinistri">
+      <Column Name="Appellativo" Type="System.String" DbType="VarChar(30) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Descrizione" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Association Name="Categoria_Sinistri_Sinistri" Member="Sinistri" ThisKey="Appellativo" OtherKey="Categoria" Type="Sinistri" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Documenti" Member="Documenti">
+    <Type Name="Documenti">
+      <Column Name="ID_Documento" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Nome" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Estensione" Type="System.String" DbType="VarChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="Dimensione" Type="System.Single" DbType="Real NOT NULL" CanBeNull="false" />
+      <Column Name="Directory" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="Tipo" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="ID_Assicurato" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Incarico" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Incarichi_Documenti" Member="Incarichi" ThisKey="Incarico" OtherKey="ID_Incarico" Type="Incarichi" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Incarichi" Member="Incarichi">
+    <Type Name="Incarichi">
+      <Column Name="ID_Incarico" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ID_Sinistro" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Stato" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Supervisore" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Perito" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Incarichi_Video_Perizie" Member="Video_Perizie" ThisKey="ID_Incarico" OtherKey="ID_Incarico" Type="Video_Perizie" />
+      <Association Name="Incarichi_Documenti" Member="Documenti" ThisKey="ID_Incarico" OtherKey="Incarico" Type="Documenti" />
+      <Association Name="Periti_Incarichi" Member="Periti" ThisKey="Perito" OtherKey="ID_Perito" Type="Periti" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="Supervisori_Incarichi" Member="Supervisori" ThisKey="Supervisore" OtherKey="ID_Supervisore" Type="Supervisori" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Luoghi" Member="Luoghi">
+    <Type Name="Luoghi">
+      <Column Name="ID_Luogo" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Provincia" Type="System.String" DbType="VarChar(2) NOT NULL" CanBeNull="false" />
+      <Column Name="Via" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="NumeroCivico" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="CAP" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="Comune" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Citta" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="Luoghi_Sinistri" Member="Sinistri" ThisKey="ID_Luogo" OtherKey="Luogo" Type="Sinistri" />
+      <Association Name="Luoghi_Studi_Peritali" Member="Studi_Peritali" ThisKey="ID_Luogo" OtherKey="Luogo" Type="Studi_Peritali" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Media" Member="Media">
+    <Type Name="Media">
+      <Column Name="NumeroMedia" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="NumeroPerizia" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Incarico" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Nome" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Estensione" Type="System.String" DbType="VarChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="Dimensione" Type="System.Single" DbType="Real NOT NULL" CanBeNull="false" />
+      <Column Name="Directory" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="Tipo" Type="System.String" DbType="VarChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="Metadati" Type="System.String" DbType="VarChar(500) NOT NULL" CanBeNull="false" />
+      <Association Name="Video_Perizie_Media" Member="Video_Perizie" ThisKey="NumeroPerizia,Incarico" OtherKey="NumeroPerizia,ID_Incarico" Type="Video_Perizie" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Periti" Member="Periti">
+    <Type Name="Periti">
+      <Column Name="ID_Perito" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Nome" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Cognome" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="DataNascita" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="Email" Type="System.String" DbType="VarChar(80)" CanBeNull="true" />
+      <Column Name="CodiceFiscale" Type="System.String" DbType="VarChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="Telefono" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="StudioPeritale" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Periti_Incarichi" Member="Incarichi" ThisKey="ID_Perito" OtherKey="Perito" Type="Incarichi" />
+      <Association Name="Studi_Peritali_Periti" Member="Studi_Peritali" ThisKey="StudioPeritale" OtherKey="ID_Studio" Type="Studi_Peritali" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Polizze" Member="Polizze">
+    <Type Name="Polizze">
+      <Column Name="Numero" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Assicurazione" Type="System.String" DbType="VarChar(100) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Assicurato" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Scadenza" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="Costo" Type="System.Decimal" DbType="Money NOT NULL" CanBeNull="false" />
+      <Column Name="Massimale" Type="System.Decimal" DbType="Money NOT NULL" CanBeNull="false" />
+      <Column Name="Tipo" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="Assicurazioni_Polizze" Member="Assicurazioni" ThisKey="Assicurazione" OtherKey="Denominazione" Type="Assicurazioni" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="Assicurati_Polizze" Member="Assicurati" ThisKey="Assicurato" OtherKey="ID_Assicurato" Type="Assicurati" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="Tipo_Polizze_Polizze" Member="Tipo_Polizze" ThisKey="Tipo" OtherKey="Tipo" Type="Tipo_Polizze" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Sinistri" Member="Sinistri">
+    <Type Name="Sinistri">
+      <Column Name="ID_Sinistro" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Assicurazione" Type="System.String" DbType="VarChar(100) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Descrizione" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
+      <Column Name="Data" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="Categoria" Type="System.String" DbType="VarChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="Luogo" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="StudioPeritale" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Assicurato" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Luoghi_Sinistri" Member="Luoghi" ThisKey="Luogo" OtherKey="ID_Luogo" Type="Luoghi" IsForeignKey="true" />
+      <Association Name="Categoria_Sinistri_Sinistri" Member="Categoria_Sinistri" ThisKey="Categoria" OtherKey="Appellativo" Type="Categoria_Sinistri" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="Assicurati_Sinistri" Member="Assicurati" ThisKey="Assicurato" OtherKey="ID_Assicurato" Type="Assicurati" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="Assicurazioni_Sinistri" Member="Assicurazioni" ThisKey="Assicurazione" OtherKey="Denominazione" Type="Assicurazioni" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="Studi_Peritali_Sinistri" Member="Studi_Peritali" ThisKey="StudioPeritale" OtherKey="ID_Studio" Type="Studi_Peritali" IsForeignKey="true" DeleteRule="SET NULL" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Studi_Peritali" Member="Studi_Peritali">
+    <Type Name="Studi_Peritali">
+      <Column Name="ID_Studio" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Nome" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Email" Type="System.String" DbType="VarChar(80) NOT NULL" CanBeNull="false" />
+      <Column Name="Telefono" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="Luogo" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Studi_Peritali_Periti" Member="Periti" ThisKey="ID_Studio" OtherKey="StudioPeritale" Type="Periti" />
+      <Association Name="Studi_Peritali_Sinistri" Member="Sinistri" ThisKey="ID_Studio" OtherKey="StudioPeritale" Type="Sinistri" />
+      <Association Name="Studi_Peritali_Supervisori" Member="Supervisori" ThisKey="ID_Studio" OtherKey="StudioPeritale" Type="Supervisori" />
+      <Association Name="Luoghi_Studi_Peritali" Member="Luoghi" ThisKey="Luogo" OtherKey="ID_Luogo" Type="Luoghi" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Supervisori" Member="Supervisori">
+    <Type Name="Supervisori">
+      <Column Name="ID_Supervisore" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Nome" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Cognome" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="DataNascita" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="Email" Type="System.String" DbType="VarChar(80)" CanBeNull="true" />
+      <Column Name="CodiceFiscale" Type="System.String" DbType="VarChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="Telefono" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="StudioPeritale" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Supervisori_Incarichi" Member="Incarichi" ThisKey="ID_Supervisore" OtherKey="Supervisore" Type="Incarichi" />
+      <Association Name="Studi_Peritali_Supervisori" Member="Studi_Peritali" ThisKey="StudioPeritale" OtherKey="ID_Studio" Type="Studi_Peritali" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Tipo_Polizze" Member="Tipo_Polizze">
+    <Type Name="Tipo_Polizze">
+      <Column Name="Tipo" Type="System.String" DbType="VarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Descrizione" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Association Name="Tipo_Polizze_Polizze" Member="Polizze" ThisKey="Tipo" OtherKey="Tipo" Type="Polizze" />
+    </Type>
+  </Table>
+</Database>
