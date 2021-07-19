@@ -487,7 +487,7 @@ namespace ElaboratoDB
 		
 		private int _NumeroPerizia;
 		
-		private int _ID_Incarico;
+		private int _Incarico;
 		
 		private float _Durata;
 		
@@ -503,8 +503,8 @@ namespace ElaboratoDB
     partial void OnCreated();
     partial void OnNumeroPeriziaChanging(int value);
     partial void OnNumeroPeriziaChanged();
-    partial void OnID_IncaricoChanging(int value);
-    partial void OnID_IncaricoChanged();
+    partial void OnIncaricoChanging(int value);
+    partial void OnIncaricoChanged();
     partial void OnDurataChanging(float value);
     partial void OnDurataChanged();
     partial void OnDataChanging(System.DateTime value);
@@ -518,7 +518,7 @@ namespace ElaboratoDB
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NumeroPerizia", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NumeroPerizia", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
 		public int NumeroPerizia
 		{
 			get
@@ -538,26 +538,26 @@ namespace ElaboratoDB
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_Incarico", DbType="Int NOT NULL", IsPrimaryKey=true)]
-		public int ID_Incarico
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Incarico", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int Incarico
 		{
 			get
 			{
-				return this._ID_Incarico;
+				return this._Incarico;
 			}
 			set
 			{
-				if ((this._ID_Incarico != value))
+				if ((this._Incarico != value))
 				{
 					if (this._Incarichi.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
-					this.OnID_IncaricoChanging(value);
+					this.OnIncaricoChanging(value);
 					this.SendPropertyChanging();
-					this._ID_Incarico = value;
-					this.SendPropertyChanged("ID_Incarico");
-					this.OnID_IncaricoChanged();
+					this._Incarico = value;
+					this.SendPropertyChanged("Incarico");
+					this.OnIncaricoChanged();
 				}
 			}
 		}
@@ -602,7 +602,7 @@ namespace ElaboratoDB
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Video_Perizie_Media", Storage="_Media", ThisKey="NumeroPerizia,ID_Incarico", OtherKey="NumeroPerizia,Incarico")]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Video_Perizie_Media", Storage="_Media", ThisKey="NumeroPerizia,Incarico", OtherKey="NumeroPerizia,Incarico")]
 		public EntitySet<Media> Media
 		{
 			get
@@ -615,7 +615,7 @@ namespace ElaboratoDB
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Incarichi_Video_Perizie", Storage="_Incarichi", ThisKey="ID_Incarico", OtherKey="ID_Incarico", IsForeignKey=true, DeleteOnNull=true, DeleteRule="CASCADE")]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Incarichi_Video_Perizie", Storage="_Incarichi", ThisKey="Incarico", OtherKey="ID_Incarico", IsForeignKey=true, DeleteOnNull=true, DeleteRule="CASCADE")]
 		public Incarichi Incarichi
 		{
 			get
@@ -638,11 +638,11 @@ namespace ElaboratoDB
 					if ((value != null))
 					{
 						value.Video_Perizie.Add(this);
-						this._ID_Incarico = value.ID_Incarico;
+						this._Incarico = value.ID_Incarico;
 					}
 					else
 					{
-						this._ID_Incarico = default(int);
+						this._Incarico = default(int);
 					}
 					this.SendPropertyChanged("Incarichi");
 				}
@@ -1038,7 +1038,7 @@ namespace ElaboratoDB
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_Documento", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID_Documento", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
 		public int ID_Documento
 		{
 			get
@@ -1414,7 +1414,7 @@ namespace ElaboratoDB
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Incarichi_Video_Perizie", Storage="_Video_Perizie", ThisKey="ID_Incarico", OtherKey="ID_Incarico")]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Incarichi_Video_Perizie", Storage="_Video_Perizie", ThisKey="ID_Incarico", OtherKey="Incarico")]
 		public EntitySet<Video_Perizie> Video_Perizie
 		{
 			get
@@ -1871,7 +1871,7 @@ namespace ElaboratoDB
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NumeroMedia", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NumeroMedia", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
 		public int NumeroMedia
 		{
 			get
@@ -2059,7 +2059,7 @@ namespace ElaboratoDB
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Video_Perizie_Media", Storage="_Video_Perizie", ThisKey="NumeroPerizia,Incarico", OtherKey="NumeroPerizia,ID_Incarico", IsForeignKey=true, DeleteOnNull=true, DeleteRule="CASCADE")]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Video_Perizie_Media", Storage="_Video_Perizie", ThisKey="NumeroPerizia,Incarico", OtherKey="NumeroPerizia,Incarico", IsForeignKey=true, DeleteOnNull=true, DeleteRule="CASCADE")]
 		public Video_Perizie Video_Perizie
 		{
 			get
@@ -2083,7 +2083,7 @@ namespace ElaboratoDB
 					{
 						value.Media.Add(this);
 						this._NumeroPerizia = value.NumeroPerizia;
-						this._Incarico = value.ID_Incarico;
+						this._Incarico = value.Incarico;
 					}
 					else
 					{

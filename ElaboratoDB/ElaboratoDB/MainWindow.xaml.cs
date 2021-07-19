@@ -830,8 +830,8 @@ namespace ElaboratoDB {
         {
             Video_Perizie videoperizia = new Video_Perizie();
             int ID_Incarico = Convert.ToInt32(txt_IncaricoVideoperizia.Text);
-            videoperizia.ID_Incarico = ID_Incarico;
-            videoperizia.NumeroPerizia = db.Video_Perizie.Count(v => v.ID_Incarico == ID_Incarico) + 1;
+            videoperizia.Incarico = ID_Incarico;
+            videoperizia.NumeroPerizia = db.Video_Perizie.Count(v => v.Incarico == ID_Incarico) + 1;
             videoperizia.Durata = float.Parse(txt_DurataVideoperizia.Text);
             videoperizia.Data = dateVideoperizia.SelectedDate.Value.Date;
 

@@ -15,12 +15,12 @@
   </Table>
   <Table Name="dbo.Video_Perizie" Member="Video_Perizie">
     <Type Name="Video_Perizie">
-      <Column Name="NumeroPerizia" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="ID_Incarico" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="NumeroPerizia" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Incarico" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="Durata" Type="System.Single" DbType="Real NOT NULL" CanBeNull="false" />
       <Column Name="Data" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
-      <Association Name="Video_Perizie_Media" Member="Media" ThisKey="NumeroPerizia,ID_Incarico" OtherKey="NumeroPerizia,Incarico" Type="Media" />
-      <Association Name="Incarichi_Video_Perizie" Member="Incarichi" ThisKey="ID_Incarico" OtherKey="ID_Incarico" Type="Incarichi" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="Video_Perizie_Media" Member="Media" ThisKey="NumeroPerizia,Incarico" OtherKey="NumeroPerizia,Incarico" Type="Media" />
+      <Association Name="Incarichi_Video_Perizie" Member="Incarichi" ThisKey="Incarico" OtherKey="ID_Incarico" Type="Incarichi" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
     </Type>
   </Table>
   <Table Name="dbo.Assicurazioni" Member="Assicurazioni">
@@ -42,7 +42,7 @@
   </Table>
   <Table Name="dbo.Documenti" Member="Documenti">
     <Type Name="Documenti">
-      <Column Name="ID_Documento" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ID_Documento" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Nome" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="Estensione" Type="System.String" DbType="VarChar(30) NOT NULL" CanBeNull="false" />
       <Column Name="Dimensione" Type="System.Single" DbType="Real NOT NULL" CanBeNull="false" />
@@ -60,7 +60,7 @@
       <Column Name="Stato" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="Supervisore" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="Perito" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Association Name="Incarichi_Video_Perizie" Member="Video_Perizie" ThisKey="ID_Incarico" OtherKey="ID_Incarico" Type="Video_Perizie" />
+      <Association Name="Incarichi_Video_Perizie" Member="Video_Perizie" ThisKey="ID_Incarico" OtherKey="Incarico" Type="Video_Perizie" />
       <Association Name="Incarichi_Documenti" Member="Documenti" ThisKey="ID_Incarico" OtherKey="Incarico" Type="Documenti" />
       <Association Name="Periti_Incarichi" Member="Periti" ThisKey="Perito" OtherKey="ID_Perito" Type="Periti" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
       <Association Name="Supervisori_Incarichi" Member="Supervisori" ThisKey="Supervisore" OtherKey="ID_Supervisore" Type="Supervisori" IsForeignKey="true" />
@@ -81,7 +81,7 @@
   </Table>
   <Table Name="dbo.Media" Member="Media">
     <Type Name="Media">
-      <Column Name="NumeroMedia" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="NumeroMedia" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="NumeroPerizia" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="Incarico" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="Nome" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
@@ -90,7 +90,7 @@
       <Column Name="Directory" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
       <Column Name="Tipo" Type="System.String" DbType="VarChar(30) NOT NULL" CanBeNull="false" />
       <Column Name="Metadati" Type="System.String" DbType="VarChar(500) NOT NULL" CanBeNull="false" />
-      <Association Name="Video_Perizie_Media" Member="Video_Perizie" ThisKey="NumeroPerizia,Incarico" OtherKey="NumeroPerizia,ID_Incarico" Type="Video_Perizie" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="Video_Perizie_Media" Member="Video_Perizie" ThisKey="NumeroPerizia,Incarico" OtherKey="NumeroPerizia,Incarico" Type="Video_Perizie" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
     </Type>
   </Table>
   <Table Name="dbo.Periti" Member="Periti">
